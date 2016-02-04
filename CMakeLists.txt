@@ -32,7 +32,7 @@ set(EX_Libs EX)
 # include the SDL flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ${SDL2_Flags}")
 # collect the sources
-set(SOURCE_FILES src/main.cpp src/Game.h src/systems/RenderSystem.cpp src/systems/RenderSystem.h src/components/RenderC.h src/components/PositionC.h src/components/SurfaceC.h src/systems/PhysicsSystem.cpp src/systems/PhysicsSystem.h src/components/LemmingC.h src/components/PhysicsC.h src/components/GroundedC.h src/systems/MovementSystem.cpp src/systems/MovementSystem.h src/components/SensorC.h src/systems/MoveSensorSystem.cpp src/systems/MoveSensorSystem.h src/utils.cpp src/utils.h src/components/MoveC.h)
+set(SOURCE_FILES src/main.cpp src/Game.h src/systems/RenderSystem.cpp src/systems/RenderSystem.h src/components/RenderC.h src/components/PositionC.h src/components/SurfaceC.h src/systems/PhysicsSystem.cpp src/systems/PhysicsSystem.h src/components/LemmingC.h src/components/PhysicsC.h src/components/GroundedC.h src/systems/MovementSystem.cpp src/systems/MovementSystem.h src/components/SensorC.h src/systems/MoveSensorSystem.cpp src/systems/MoveSensorSystem.h src/utils.cpp src/utils.h src/components/MoveC.h src/components/AssetC.h src/components/AnimationC.h src/systems/AnimationSystem.cpp src/systems/AnimationSystem.h src/systems/StateSystem.cpp src/systems/StateSystem.h)
 # define the target
 add_executable(lemmings ${SOURCE_FILES})
 # include the SDL headers

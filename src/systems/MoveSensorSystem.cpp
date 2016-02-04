@@ -31,20 +31,18 @@ void MoveSensorSystem::update(entityx::EntityManager &entities,
 
 bool MoveSensorSystem::checkDirection(SurfaceC *pC, SensorC *pSensorC,
                                       PositionC *pPositionC, MoveC *pMoveC, int step) {
-    int pixel;
     int testX = (int) pPositionC->x;
     int testY = (int) pPositionC->y - pSensorC->verticalStep - 1;
+    int pixel;
+
     for (int i = 0; i < pSensorC->sight; i++) {
         testX += step;
 
         pixel = getSurfacePixel(pC->surface, testX, testY);
 
         if (pixel > 0) {
-            printf("Can't move\n");
             return true;
         }
     }
-
-    printf("direction move allowed %d\n", step);
     return false;
 }

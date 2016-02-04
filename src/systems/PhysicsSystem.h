@@ -13,7 +13,8 @@ class PhysicsSystem : public entityx::System<PhysicsSystem> {
 
 public:
     PhysicsSystem();
-    virtual void update(entityx::EntityManager &entities, entityx::EventManager &events,
+    virtual void update(entityx::EntityManager &entities,
+                        entityx::EventManager &events,
                         entityx::TimeDelta dt) override;
 private:
     double _gravitySpeed;

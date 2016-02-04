@@ -18,54 +18,52 @@
 #include "components/SensorC.h"
 #include "components/MoveC.h"
 #include "systems/MoveSensorSystem.h"
+#include "components/AssetC.h"
+#include "systems/AnimationSystem.h"
+#include "components/AnimationC.h"
+#include "systems/StateSystem.h"
 
 namespace ex = entityx;
 
 class Game {
 public:
-//    move implementation to *.cpp
+    //    move implementation to *.cpp
     explicit Game(SDL_Renderer *pRenderer) :
             _events(),
             _entities(_events),
             _systems(_entities, _events) {
-        _systems.add<RenderSystem>(pRenderer);
-        _systems.add<PhysicsSystem>();
-        _systems.add<MovementSystem>();
+        _systems.add<AnimationSystem>();
         _systems.add<MoveSensorSystem>();
+        _systems.add<MovementSystem>();
+        _systems.add<PhysicsSystem>();
+        _systems.add<RenderSystem>(pRenderer);
+        _systems.add<StateSystem>();
         _systems.configure();
 
         createBack(pRenderer);
         createLemming(pRenderer);
     }
 
-    void createBack(SDL_Renderer* pRenderer) {
+    void createBack(SDL_Renderer *pRenderer) {
         ex::Entity back = _entities.create();
 
         SDL_Surface *surface = SDL_LoadBMP("level.bmp");
-        SDL_Texture *texture = SDL_CreateTextureFromSurface(pRenderer, surface);
 
-        back.assign<RenderC>(texture);
+        back.assign<AssetC>("level.bmp");
         back.assign<SurfaceC>(surface);
         back.assign<PositionC>(0, 0);
     }
 
-    void createLemming(SDL_Renderer* pRenderer) {
+    void createLemming(SDL_Renderer *pRenderer) {
         ex::Entity lemming = _entities.create();
-        SDL_Texture *texture = toTexture("lemming.bmp", pRenderer);
 
-        lemming.assign<RenderC>(texture);
+        lemming.assign<AssetC>("lemming.bmp");
+        lemming.assign<AnimationC>("idle", 15);
         lemming.assign<LemmingC>();
         lemming.assign<SensorC>(5, 5);
-        lemming.assign<MoveC>(1);
+        lemming.assign<MoveC>(3);
         lemming.assign<PhysicsC>();
-        lemming.assign<PositionC>(300, 60);
-    }
-
-    SDL_Texture *toTexture(const char *pId, SDL_Renderer *pRenderer) {
-        SDL_Surface *surface = SDL_LoadBMP(pId);
-        SDL_Texture *texture = SDL_CreateTextureFromSurface(pRenderer, surface);
-        SDL_FreeSurface(surface);
-        return texture;
+        lemming.assign<PositionC>(180, 60);
     }
 
     void update(ex::TimeDelta dt) {
@@ -76,7 +74,8 @@ public:
         return true;
     };
 
-    ~Game() { };
+    ~Game() {
+    };
 private:
     ex::EntityManager _entities;
     ex::SystemManager _systems;

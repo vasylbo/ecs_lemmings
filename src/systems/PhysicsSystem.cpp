@@ -20,14 +20,11 @@ void PhysicsSystem::update(entityx::EntityManager &entities,
                 .entities_with_components<PhysicsC, PositionC>()) {
             positionC = unit.component<PositionC>().get();
             positionC->y += _gravitySpeed * dt;
+
             auto pixel = getSurfacePixel(
                 surface, (int)positionC->x, (int)positionC->y);
+
             if (pixel > 0) {
-                while (pixel != 0) {
-                    positionC->y -= 1;
-                    pixel = getSurfacePixel(
-                        surface, (int)positionC->x, (int)positionC->y);
-                }
                 if (!unit.has_component<GroundedC>()) {
                     unit.assign<GroundedC>();
                 }
@@ -35,6 +32,12 @@ void PhysicsSystem::update(entityx::EntityManager &entities,
                 if (unit.has_component<GroundedC>()) {
                     unit.remove<GroundedC>();
                 }
+            }
+
+            while (pixel != 0) {
+                positionC->y -= 1;
+                pixel = getSurfacePixel(
+                    surface, (int)positionC->x, (int)positionC->y);
             }
         }
     }

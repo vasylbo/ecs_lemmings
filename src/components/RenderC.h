@@ -12,27 +12,26 @@
 struct RenderC : public entityx::Component<RenderC> {
     RenderC() { };
 
-    RenderC(SDL_Texture *pTexture) :
+    RenderC(SDL_Texture *pTexture,
+            int pAnchorX = 0,
+            int pAnchorY = 0) :
             texture(pTexture),
-            w(), h() {
+            w(), h(),
+            sX(0), sY(),
+            anchor() {
         SDL_QueryTexture(texture, NULL, NULL, &w, &h);
-    }
+        anchor.x = pAnchorX;
+        anchor.y = pAnchorY;
 
-    RenderC(SDL_Texture *pTexture, int pW, int pH) :
-            texture(pTexture),
-            w(pW), h(pH) {};
-
-    RenderC(SDL_Texture *pTexture, double scale) :
-            texture(pTexture),
-            w(), h() {
-        SDL_QueryTexture(texture, NULL, NULL, &w, &h);
-        w *= scale;
-        h *= scale;
     }
 
 //    remove texture, add id, add textures cache
     SDL_Texture *texture;
+
     int w, h;
+    int sX, sY;
+
+    SDL_Point anchor;
 };
 
 #endif //LEMMINGS_RENDERCOMPONENT_H
