@@ -10,16 +10,6 @@
 void StateSystem::update(entityx::EntityManager &entities,
                          entityx::EventManager &events,
                          entityx::TimeDelta dt) {
-    for (entityx::Entity entity : entities.
-            entities_with_components<LemmingC>()) {
-        AnimationC* animationC = entity.component<AnimationC>().get();
-
-        if (entity.has_component<GroundedC>()) {
-            entity.replace<AnimationC>("idle");
-        } else {
-            entity.replace<AnimationC>("run");
-        }
-    }
 }
 
 void StateSystem::configure(entityx::EntityManager &entities,

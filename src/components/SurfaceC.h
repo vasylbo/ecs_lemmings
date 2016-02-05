@@ -10,11 +10,16 @@
 #include <SDL2/SDL_surface.h>
 
 struct SurfaceC : public entityx::Component<SurfaceC> {
-    SurfaceC() { };
+    SurfaceC() {
+    };
 
-    SurfaceC(SDL_Surface *pSurface) : surface(pSurface) { };
+    SurfaceC(SDL_Surface *pSurface, int pMaxDrop) :
+            surface(pSurface),
+            maxDrop(pMaxDrop) {
+    };
 
     SDL_Surface *surface;
+    int maxDrop;
 };
 
 #endif //LEMMINGS_BACKC_H

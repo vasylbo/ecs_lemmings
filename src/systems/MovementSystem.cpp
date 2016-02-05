@@ -11,12 +11,12 @@
 void MovementSystem::update(entityx::EntityManager &entities,
                             entityx::EventManager &events,
                             entityx::TimeDelta dt) {
-    entities.each<GroundedC, PositionC, MoveC, SensorC>([](
+    entities.each<GroundedC, PositionC, MoveC, SensorC>([dt](
             entityx::Entity pEntity, GroundedC &pGroundedC,
             PositionC &pPositionC, MoveC &pMoveC, SensorC &pSensorC) {
         if ((pMoveC.speed > 0 && !pSensorC.rightS) ||
                 (pMoveC.speed < 0 && !pSensorC.leftS)) {
-            pPositionC.x += pMoveC.speed;
+            pPositionC.x += pMoveC.speed * dt;
         } else {
             pMoveC.speed *= -1;
         }

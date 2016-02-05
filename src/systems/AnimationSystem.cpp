@@ -13,8 +13,10 @@ void AnimationSystem::update(entityx::EntityManager &entities,
                              entityx::TimeDelta dt) {
     AnimationC *aC;
     RenderC *renderC;
-    for (ex::Entity entity : entities.entities_with_components<AnimationC, RenderC>()) {
+    for (ex::Entity entity : entities
+            .entities_with_components<AnimationC, RenderC>()) {
         aC = entity.component<AnimationC>().get();
+        // remove 1000
         aC->timeSinceLastFrame += dt * 1000;
 
         if (aC->timeSinceLastFrame > aC->frameTime) {

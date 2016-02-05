@@ -50,7 +50,7 @@ public:
         SDL_Surface *surface = SDL_LoadBMP("level.bmp");
 
         back.assign<AssetC>("level.bmp");
-        back.assign<SurfaceC>(surface);
+        back.assign<SurfaceC>(surface, 5);
         back.assign<PositionC>(0, 0);
     }
 
@@ -61,7 +61,7 @@ public:
         lemming.assign<AnimationC>("idle", 15);
         lemming.assign<LemmingC>();
         lemming.assign<SensorC>(5, 5);
-        lemming.assign<MoveC>(3);
+        lemming.assign<MoveC>(9);
         lemming.assign<PhysicsC>();
         lemming.assign<PositionC>(180, 60);
     }
