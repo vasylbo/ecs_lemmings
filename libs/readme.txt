@@ -1,1 +1,1 @@
-Copy SDL and entityx here
+Copy SDL, SDL_image and entityx here

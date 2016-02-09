@@ -5,8 +5,8 @@
 #ifndef LEMMINGS_PHYSICSSYSTEM_H
 #define LEMMINGS_PHYSICSSYSTEM_H
 
-#include <SDL2/SDL_stdinc.h>
-#include <SDL2/SDL_surface.h>
+#include <SDL_stdinc.h>
+#include <SDL_surface.h>
 #include "entityx/entityx.h"
 
 class PhysicsSystem : public entityx::System<PhysicsSystem> {

@@ -6,7 +6,7 @@
 #define LEMMINGS_UTILS_H
 
 
-#include <SDL2/SDL_surface.h>
+#include <SDL_surface.h>
 
 Uint8 getSurfacePixel(SDL_Surface *pSurface, int x, int y);
 

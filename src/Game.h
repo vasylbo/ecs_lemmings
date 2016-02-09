@@ -3,7 +3,7 @@
 //
 #pragma once
 
-#include "SDL2/SDL_render.h"
+#include "SDL_render.h"
 #include "entityx/System.h"
 #include "entityx/Event.h"
 #include "entityx/Entity.h"

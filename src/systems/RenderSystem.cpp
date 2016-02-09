@@ -2,6 +2,7 @@
 // Created by Vasyl
 //
 
+#include "SDL2/SDL_image.h"
 #include "RenderSystem.h"
 #include "../components/RenderC.h"
 #include "../components/PositionC.h"
@@ -55,7 +56,7 @@ void RenderSystem::receive(const ex::ComponentAddedEvent <AssetC> &event) {
 }
 
 SDL_Texture *RenderSystem::toTexture(const char *pId, SDL_Renderer *pRenderer) {
-    SDL_Surface *surface = SDL_LoadBMP(pId);
+    SDL_Surface *surface = IMG_Load(pId);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(pRenderer, surface);
     SDL_FreeSurface(surface);
     return texture;

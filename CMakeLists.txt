@@ -7,7 +7,7 @@ project(lemmings)
 set(SDL2_Flags "-mwindows -Wl,--no-undefined -static-libgcc")
 # library paths
 set(SDL2_ROOT "${PROJECT_SOURCE_DIR}/libs/SDL2-2.0.4/i686-w64-mingw32")
-set(SDL2_Includes "${SDL2_ROOT}/include")
+set(SDL2_Includes "${SDL2_ROOT}/include/SDL2")
 set(SDL2_LibDir   "${SDL2_ROOT}/lib")
 # imported targets for CMake (cf. https://cmake.org/Wiki/CMake/Tutorials/Exporting_and_Importing_Targets)
 add_library(SDL2     STATIC IMPORTED)
@@ -27,6 +27,14 @@ add_library(EX STATIC IMPORTED)
 set_property(TARGET EX PROPERTY IMPORTED_LOCATION ${EX_LibDir}/libentityx-d.a)
 set(EX_Libs EX)
 
+set(SDL_IMAGE_ROOT "${PROJECT_SOURCE_DIR}/libs/SDL2_image-2.0.1/i686-w64-mingw32")
+set(SDL_IMAGE_Includes "${SDL_IMAGE_ROOT}/include")
+set(SDL_IMAGE_LibDir "${SDL_IMAGE_ROOT}/lib")
+add_library(SDL_IMAGE STATIC IMPORTED)
+set_property(TARGET SDL_IMAGE PROPERTY IMPORTED_LOCATION
+        ${SDL_IMAGE_LibDir}/libSDL2_image.a)
+set(SDL_IMAGE_Libs SDL_IMAGE)
+
 
 # configure the project
 # include the SDL flags
@@ -36,8 +44,9 @@ set(SOURCE_FILES src/main.cpp src/Game.h src/systems/RenderSystem.cpp src/system
 # define the target
 add_executable(lemmings ${SOURCE_FILES})
 # include the SDL headers
-target_include_directories(lemmings SYSTEM PRIVATE ${SDL2_Includes} ${EX_Includes})
+target_include_directories(lemmings SYSTEM PRIVATE ${SDL2_Includes}
+        ${EX_Includes} ${SDL_IMAGE_Includes})
 # link against the SDL (and its dependencies)
-target_link_libraries(lemmings ${SDL2_Libs} ${EX_Libs})
+target_link_libraries(lemmings ${SDL2_Libs} ${EX_Libs} ${SDL_IMAGE_Libs})
 
 

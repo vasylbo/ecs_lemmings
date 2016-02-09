@@ -1,5 +1,5 @@
 #include "windows.h"
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include "Game.h"
 
 using namespace std;

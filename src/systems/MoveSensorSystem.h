@@ -5,7 +5,7 @@
 #ifndef LEMMINGS_MOVESENSORSYSTEM_H
 #define LEMMINGS_MOVESENSORSYSTEM_H
 
-#include <SDL2/SDL_surface.h>
+#include <SDL_surface.h>
 #include "entityx/System.h"
 #include "../components/SensorC.h"
 #include "../components/PositionC.h"

@@ -2,7 +2,7 @@
 // Created by Vasyl.
 //
 
-#include <SDL2/SDL_log.h>
+#include <SDL_log.h>
 #include "MoveSensorSystem.h"
 #include "../utils.h"
 #include "../components/GroundedC.h"

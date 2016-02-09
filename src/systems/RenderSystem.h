@@ -5,7 +5,7 @@
 #ifndef LEMMINGS_RENDERSYSTEM_H
 #define LEMMINGS_RENDERSYSTEM_H
 
-#include <SDL2/SDL_render.h>
+#include <SDL_render.h>
 #include "entityx/entityx.h"
 #include "../components/AssetC.h"
 

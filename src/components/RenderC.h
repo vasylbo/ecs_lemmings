@@ -5,8 +5,8 @@
 #ifndef LEMMINGS_RENDERCOMPONENT_H
 #define LEMMINGS_RENDERCOMPONENT_H
 
-#include <SDL2/SDL_rect.h>
-#include <SDL2/SDL_render.h>
+#include <SDL_rect.h>
+#include <SDL_render.h>
 #include "entityx/Entity.h"
 
 struct RenderC : public entityx::Component<RenderC> {

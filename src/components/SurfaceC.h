@@ -7,7 +7,7 @@
 #define LEMMINGS_BACKC_H
 
 #include <entityx/Entity.h>
-#include <SDL2/SDL_surface.h>
+#include <SDL_surface.h>
 
 struct SurfaceC : public entityx::Component<SurfaceC> {
     SurfaceC() {
