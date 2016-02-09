@@ -70,7 +70,9 @@ void RenderSystem::receive(const ex::ComponentAddedEvent <AssetC> &event) {
 }
 
 SDL_Texture *RenderSystem::toTexture(const char *pId, SDL_Renderer *pRenderer) {
+
     SDL_Surface *surface = IMG_Load(pId);
+
     if (surface == NULL) {
         printf("%s not loaded, error %s\n", pId, IMG_GetError());
     }

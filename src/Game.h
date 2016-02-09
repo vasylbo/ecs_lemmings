@@ -24,6 +24,8 @@
 #include "components/AnimationC.h"
 #include "systems/StateSystem.h"
 #include "systems/SpawnSystem.h"
+#include "systems/InputSystem.h"
+#include "systems/DiggerSystem.h"
 
 namespace ex = entityx;
 
@@ -38,9 +40,11 @@ public:
         _systems.add<AnimationSystem>();
         _systems.add<MovementSystem>();
         _systems.add<MoveSensorSystem>();
+        _systems.add<DiggerSystem>(pRenderer);
         _systems.add<PhysicsSystem>();
         _systems.add<StateSystem>();
         _systems.add<SpawnSystem>();
+        _systems.add<InputSystem>();
         _systems.configure();
 
         createGame();
@@ -50,7 +54,8 @@ public:
     void createGame() {
         ex::Entity game = _entities.create();
 
-        game.assign<GameC>(40, 1500);
+
+        game.assign<GameC>(40, 2500);
     }
 
     void createBack(SDL_Renderer *pRenderer) {

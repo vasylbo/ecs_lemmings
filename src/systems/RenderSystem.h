@@ -18,7 +18,8 @@ class RenderSystem :
 public:
     explicit RenderSystem(SDL_Renderer *pRenderer);
 
-    virtual void configure(ex::EntityManager &entities, ex::EventManager &events) override;
+    virtual void configure(ex::EntityManager &entities,
+                           ex::EventManager &events) override;
 
     void receive(const ex::ComponentAddedEvent<AssetC> &event);
     SDL_Texture *toTexture(const char *pId, SDL_Renderer *pRenderer);

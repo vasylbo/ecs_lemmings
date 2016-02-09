@@ -8,6 +8,7 @@
 
 #include <entityx/System.h>
 #include "../components/GroundedC.h"
+#include "../events/StateChangeEvent.h"
 
 class StateSystem : public entityx::System<StateSystem>,
                     public entityx::Receiver<StateSystem> {
@@ -24,6 +25,10 @@ public:
 
     void receive(const entityx::ComponentAddedEvent<GroundedC> &event);
     void receive(const entityx::ComponentRemovedEvent<GroundedC> &event);
+    void receive(const StateChangeEvent &event);
+
+private:
+    void switchToDigger(entityx::Entity* entity);
 };
 
 

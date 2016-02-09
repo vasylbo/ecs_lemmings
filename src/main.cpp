@@ -26,13 +26,10 @@ int main(int, char **) {
 
     Game *game = new Game(g_pRenderer);
 
-    SDL_Event *event;
     int start = SDL_GetTicks();
     int end;
     double dt;
     while (game->isActive()) {
-        while (SDL_PollEvent(event) != 0) {};
-
         game->update(dt);
         SDL_Delay(15);
 

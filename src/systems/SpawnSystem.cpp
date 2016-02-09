@@ -11,6 +11,7 @@
 #include "../components/PhysicsC.h"
 #include "../components/PositionC.h"
 #include "../components/SensorC.h"
+#include "../components/InteractiveC.h"
 
 void SpawnSystem::update(entityx::EntityManager &entities,
                          entityx::EventManager &events, entityx::TimeDelta dt) {
@@ -39,5 +40,6 @@ void SpawnSystem::createLemming(entityx::EntityManager &entities) {
     lemming.assign<MoveC>(15);
     lemming.assign<PhysicsC>();
     lemming.assign<PositionC>(180, 60);
+    lemming.assign<InteractiveC>();
 }
 
