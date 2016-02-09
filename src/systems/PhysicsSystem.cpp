@@ -13,6 +13,7 @@ void PhysicsSystem::update(entityx::EntityManager &entities,
                            entityx::EventManager &events,
                            entityx::TimeDelta dt) {
     PositionC *positionC;
+    Uint8 pixel;
 
     for (entityx::Entity ground : entities.entities_with_components<SurfaceC>()) {
         SurfaceC *surfaceC = ground.component<SurfaceC>().get();
@@ -21,12 +22,11 @@ void PhysicsSystem::update(entityx::EntityManager &entities,
                 .entities_with_components<PhysicsC, PositionC>()) {
             positionC = unit.component<PositionC>().get();
 
-            auto pixel = getSurfacePixel(
-                    surface,
-                    (int) positionC->x,
-                    (int) positionC->y + 1);
+            pixel = getSurfacePixel(surface,
+                            (int) positionC->x,
+                            (int) positionC->y + 1);
 
-            // refactor
+            // todo: refactor
             if (pixel > 0) {
                 while (pixel != 0) {
                     positionC->y -= 1;
@@ -45,10 +45,11 @@ void PhysicsSystem::update(entityx::EntityManager &entities,
                                 (int) positionC->y + i);
                         if (pixel == 0) {
                             positionC->y += i;
-                            return;
+                            break;
                         }
                     }
-                    unit.remove<GroundedC>();
+                    if (pixel != 0)
+                        unit.remove<GroundedC>();
                 } else {
                     positionC->y += _gravitySpeed * dt;
                 }
