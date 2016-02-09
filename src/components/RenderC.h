@@ -20,6 +20,7 @@ struct RenderC : public entityx::Component<RenderC> {
             sX(0), sY(),
             anchor() {
         SDL_QueryTexture(texture, NULL, NULL, &w, &h);
+        printf("RendC sizes %d - %d \n", w, h);
         anchor.x = pAnchorX;
         anchor.y = pAnchorY;
 

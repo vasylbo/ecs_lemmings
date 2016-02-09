@@ -10,7 +10,14 @@
 using namespace std;
 
 RenderSystem::RenderSystem(SDL_Renderer *pRenderer) :
-        _renderer(pRenderer) { }
+        _renderer(pRenderer) {
+    int pngFlags = IMG_INIT_PNG;
+    if (!IMG_Init(pngFlags) & pngFlags) {
+        printf("Cant initialize\n");
+    } else {
+        printf("PNG initialized\n");
+    };
+}
 
 RenderSystem::~RenderSystem() {
     _renderer = NULL;
@@ -57,6 +64,9 @@ void RenderSystem::receive(const ex::ComponentAddedEvent <AssetC> &event) {
 
 SDL_Texture *RenderSystem::toTexture(const char *pId, SDL_Renderer *pRenderer) {
     SDL_Surface *surface = IMG_Load(pId);
+    if (surface == NULL) {
+        printf("%s not loaded, error %s\n", pId, IMG_GetError());
+    }
     SDL_Texture *texture = SDL_CreateTextureFromSurface(pRenderer, surface);
     SDL_FreeSurface(surface);
     return texture;

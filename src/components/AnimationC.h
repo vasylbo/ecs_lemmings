@@ -16,7 +16,8 @@ struct AnimationC : public entityx::Component<AnimationC> {
             frameTime(1000 / pFrameRate),
             timeSinceLastFrame(0),
             fW(), fH(), fX(), fY(), fCount() {
-        fW = fH = 32;
+        fW = 12;
+        fH = 20;
         fX = fY = 0;
         fCount = 5;
     };

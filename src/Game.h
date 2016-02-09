@@ -18,10 +18,12 @@
 #include "components/SensorC.h"
 #include "components/MoveC.h"
 #include "systems/MoveSensorSystem.h"
-#include "components/AssetC.h"
 #include "systems/AnimationSystem.h"
+#include "components/AssetC.h"
+#include "components/GameC.h"
 #include "components/AnimationC.h"
 #include "systems/StateSystem.h"
+#include "systems/SpawnSystem.h"
 
 namespace ex = entityx;
 
@@ -32,6 +34,7 @@ public:
             _events(),
             _entities(_events),
             _systems(_entities, _events) {
+        _systems.add<SpawnSystem>();
         _systems.add<AnimationSystem>();
         _systems.add<MoveSensorSystem>();
         _systems.add<MovementSystem>();
@@ -40,30 +43,25 @@ public:
         _systems.add<StateSystem>();
         _systems.configure();
 
+        createGame();
         createBack(pRenderer);
-        createLemming(pRenderer);
+    }
+
+    void createGame() {
+        ex::Entity game = _entities.create();
+
+        game.assign<GameC>(40, 1000);
     }
 
     void createBack(SDL_Renderer *pRenderer) {
         ex::Entity back = _entities.create();
 
+        // todo: double load
         SDL_Surface *surface = SDL_LoadBMP("level.bmp");
 
         back.assign<AssetC>("level.bmp");
         back.assign<SurfaceC>(surface, 5);
         back.assign<PositionC>(0, 0);
-    }
-
-    void createLemming(SDL_Renderer *pRenderer) {
-        ex::Entity lemming = _entities.create();
-
-        lemming.assign<AssetC>("lemming.bmp");
-        lemming.assign<AnimationC>("idle", 15);
-        lemming.assign<LemmingC>();
-        lemming.assign<SensorC>(5, 5);
-        lemming.assign<MoveC>(9);
-        lemming.assign<PhysicsC>();
-        lemming.assign<PositionC>(180, 60);
     }
 
     void update(ex::TimeDelta dt) {
@@ -76,6 +74,7 @@ public:
 
     ~Game() {
     };
+
 private:
     ex::EntityManager _entities;
     ex::SystemManager _systems;

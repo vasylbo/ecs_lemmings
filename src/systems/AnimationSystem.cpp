@@ -28,8 +28,8 @@ void AnimationSystem::update(entityx::EntityManager &entities,
             renderC->sX = aC->fX + aC->fW * aC->currentFrame;
             renderC->w = aC->fW;
             renderC->h = aC->fH;
-            renderC->anchor.x = 16;
-            renderC->anchor.y = 32;
+            renderC->anchor.x = 6;
+            renderC->anchor.y = 20;
 
             aC->timeSinceLastFrame = 0;
         }
