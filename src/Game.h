@@ -34,13 +34,13 @@ public:
             _events(),
             _entities(_events),
             _systems(_entities, _events) {
-        _systems.add<SpawnSystem>();
-        _systems.add<AnimationSystem>();
-        _systems.add<MoveSensorSystem>();
-        _systems.add<MovementSystem>();
-        _systems.add<PhysicsSystem>();
         _systems.add<RenderSystem>(pRenderer);
+        _systems.add<AnimationSystem>();
+        _systems.add<MovementSystem>();
+        _systems.add<MoveSensorSystem>();
+        _systems.add<PhysicsSystem>();
         _systems.add<StateSystem>();
+        _systems.add<SpawnSystem>();
         _systems.configure();
 
         createGame();
@@ -50,7 +50,7 @@ public:
     void createGame() {
         ex::Entity game = _entities.create();
 
-        game.assign<GameC>(40, 1000);
+        game.assign<GameC>(40, 1500);
     }
 
     void createBack(SDL_Renderer *pRenderer) {

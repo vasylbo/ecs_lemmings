@@ -14,7 +14,7 @@ struct AnimationC : public entityx::Component<AnimationC> {
     AnimationC(const char *pId, int pFrameRate = 15) :
             id(pId),
             frameTime(1000 / pFrameRate),
-            timeSinceLastFrame(0),
+            timeSinceLastFrame(100000),
             fW(), fH(), fX(), fY(), fCount() {
         fW = 12;
         fH = 20;

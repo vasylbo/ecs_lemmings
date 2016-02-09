@@ -18,12 +18,11 @@ struct RenderC : public entityx::Component<RenderC> {
             texture(pTexture),
             w(), h(),
             sX(0), sY(),
-            anchor() {
+            anchor(),
+            flip(false){
         SDL_QueryTexture(texture, NULL, NULL, &w, &h);
-        printf("RendC sizes %d - %d \n", w, h);
         anchor.x = pAnchorX;
         anchor.y = pAnchorY;
-
     }
 
 //    remove texture, add id, add textures cache
@@ -31,6 +30,7 @@ struct RenderC : public entityx::Component<RenderC> {
 
     int w, h;
     int sX, sY;
+    bool flip;
 
     SDL_Point anchor;
 };

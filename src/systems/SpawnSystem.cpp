@@ -36,7 +36,7 @@ void SpawnSystem::createLemming(entityx::EntityManager &entities) {
     lemming.assign<AnimationC>("idle", 15);
     lemming.assign<LemmingC>();
     lemming.assign<SensorC>(5, 5);
-    lemming.assign<MoveC>(9);
+    lemming.assign<MoveC>(15);
     lemming.assign<PhysicsC>();
     lemming.assign<PositionC>(180, 60);
 }
