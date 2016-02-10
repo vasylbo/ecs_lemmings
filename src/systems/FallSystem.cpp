@@ -2,16 +2,16 @@
 // Created by Vasyl
 //
 
-#include "PhysicsSystem.h"
+#include "FallSystem.h"
 #include "../components/SurfaceC.h"
 #include "../components/PositionC.h"
-#include "../components/PhysicsC.h"
 #include "../components/GroundedC.h"
 #include "../utils.h"
+#include "../components/CanFallC.h"
 
-void PhysicsSystem::update(entityx::EntityManager &entities,
-                           entityx::EventManager &events,
-                           entityx::TimeDelta dt) {
+void FallSystem::update(entityx::EntityManager &entities,
+                        entityx::EventManager &events,
+                        entityx::TimeDelta dt) {
     PositionC *positionC;
     Uint8 pixel;
 
@@ -19,7 +19,7 @@ void PhysicsSystem::update(entityx::EntityManager &entities,
         SurfaceC *surfaceC = ground.component<SurfaceC>().get();
         SDL_Surface *surface = surfaceC->surface;
         for (entityx::Entity unit : entities
-                .entities_with_components<PhysicsC, PositionC>()) {
+                .entities_with_components<CanFallC, PositionC>()) {
             positionC = unit.component<PositionC>().get();
 
             pixel = getSurfacePixel(surface,
@@ -45,11 +45,13 @@ void PhysicsSystem::update(entityx::EntityManager &entities,
                                 (int) positionC->y + i);
                         if (pixel == 0) {
                             positionC->y += i;
+                        } else {
                             break;
                         }
                     }
-                    if (pixel != 0)
+                    if (pixel == 0) {
                         unit.remove<GroundedC>();
+                    }
                 } else {
                     positionC->y += _gravitySpeed * dt;
                 }
@@ -59,7 +61,7 @@ void PhysicsSystem::update(entityx::EntityManager &entities,
 
 }
 
-PhysicsSystem::PhysicsSystem() {
+FallSystem::FallSystem() {
     _gravitySpeed = 9.8;
 }
 

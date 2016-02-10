@@ -8,8 +8,9 @@
 #include <entityx/Entity.h>
 
 struct DiggerC : entityx::Component<DiggerC> {
-    DiggerC(int pDiggerSpeed) : diggerSpeed(pDiggerSpeed),
-                                diggerInterval(600),
+    DiggerC(int pDiggerSpeed, int pDiggerInterval) :
+                                diggerSpeed(pDiggerSpeed),
+                                diggerInterval(pDiggerInterval),
                                 timeFromLastDig(0) { }
 
     // static data

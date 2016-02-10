@@ -29,8 +29,6 @@ void DiggerSystem::update(entityx::EntityManager &entities,
         SDL_LockSurface(surface);
 
         Uint8* pixels = (Uint8*) surface->pixels;
-        // 1. Remove pixels in surface
-        // 2. Make texture from it
         for (entityx::Entity entity : entities
                 .entities_with_components<PositionC, DiggerC, GroundedC>()) {
             positionC = entity.component<PositionC>().get();
@@ -38,13 +36,12 @@ void DiggerSystem::update(entityx::EntityManager &entities,
 
             diggerC->timeFromLastDig += dt * 1000;
 
-            printf("digger time %d \n", diggerC->timeFromLastDig);
             if (diggerC->timeFromLastDig > diggerC->diggerInterval) {
                 x = (int) positionC->x;
                 y = (int) positionC->y;
 
-                for (int i = x - 5; i < x + 5; i++) {
-                    for (int j = y; j < y + 3; j++) {
+                for (int i = x - 7; i < x + 9; i++) {
+                    for (int j = y; j < y + diggerC->diggerSpeed; j++) {
                         int pos = (j * surface->pitch) + i;
                         pixels[pos] = 0;
                     }
@@ -54,11 +51,11 @@ void DiggerSystem::update(entityx::EntityManager &entities,
                 dirty = true;
             }
         }
-
-        // 3. Burn into background
         SDL_UnlockSurface(surface);
-        if (dirty)
-            renderC->texture = SDL_CreateTextureFromSurface(_renderer, surface);
+        if (dirty) {
+            renderC->texture =
+                    SDL_CreateTextureFromSurface(_renderer, surface);
+        }
     }
 }
 

@@ -9,11 +9,12 @@
 #include <entityx/System.h>
 #include "../components/GroundedC.h"
 #include "../events/StateChangeEvent.h"
+#include "../LemmingBuilder.h"
 
 class StateSystem : public entityx::System<StateSystem>,
                     public entityx::Receiver<StateSystem> {
 public:
-    StateSystem() {};
+    StateSystem(LemmingBuilder* pBuilder);
 
 
     virtual void configure(entityx::EntityManager &entities,
@@ -28,7 +29,8 @@ public:
     void receive(const StateChangeEvent &event);
 
 private:
-    void switchToDigger(entityx::Entity* entity);
+    void switchToDigger(entityx::Entity& entity);
+    LemmingBuilder* _builder;
 };
 
 

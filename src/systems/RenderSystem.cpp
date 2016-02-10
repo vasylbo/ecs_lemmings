@@ -12,11 +12,7 @@ using namespace std;
 RenderSystem::RenderSystem(SDL_Renderer *pRenderer) :
         _renderer(pRenderer) {
     int pngFlags = IMG_INIT_PNG;
-    if (!IMG_Init(pngFlags) & pngFlags) {
-        printf("Cant initialize\n");
-    } else {
-        printf("PNG initialized\n");
-    };
+    IMG_Init(pngFlags);
 }
 
 RenderSystem::~RenderSystem() {
@@ -66,6 +62,9 @@ void RenderSystem::receive(const ex::ComponentAddedEvent <AssetC> &event) {
     auto assetC = event.component.get();
     auto texture = toTexture(assetC->id, _renderer);
 
+    if (entity.has_component<RenderC>()) {
+        entity.remove<RenderC>();
+    }
     entity.assign<RenderC>(texture);
 }
 

@@ -7,8 +7,8 @@
 
 #include <entityx/Entity.h>
 
-struct PhysicsC : public entityx::Component<PhysicsC> {
-    PhysicsC() {};
+struct CanFallC : public entityx::Component<CanFallC> {
+    CanFallC() {};
 
 //  just a tag now
 };

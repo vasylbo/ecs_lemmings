@@ -11,16 +11,15 @@ struct AnimationC : public entityx::Component<AnimationC> {
     AnimationC() {
     };
 
-    AnimationC(const char *pId, int pFrameRate = 15) :
+    AnimationC(const char *pId, int pFrameRate,
+               int pAX, int pAY,
+               int pW, int pH, int pFCount) :
             id(pId),
             frameTime(1000 / pFrameRate),
             timeSinceLastFrame(100000),
-            fW(), fH(), fX(), fY(), fCount() {
-        fW = 12;
-        fH = 20;
-        fX = fY = 0;
-        fCount = 5;
-    };
+            aX(pAX), aY(pAY),
+            fW(pW), fH(pH),
+            fX(0), fY(0), fCount(pFCount) { }
 
 //    dynamic data
     int frameTime;
@@ -32,6 +31,7 @@ struct AnimationC : public entityx::Component<AnimationC> {
     int fW, fH;
     int fX, fY;
     int fCount;
+    int aX, aY;
 };
 
 #endif //LEMMINGS_ANIMATIONC_H

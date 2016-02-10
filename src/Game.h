@@ -3,6 +3,7 @@
 //
 #pragma once
 
+#include <SDL_config_lib.h>
 #include "SDL_render.h"
 #include "entityx/System.h"
 #include "entityx/Event.h"
@@ -12,8 +13,6 @@
 #include "systems/RenderSystem.h"
 #include "components/SurfaceC.h"
 #include "components/LemmingC.h"
-#include "systems/PhysicsSystem.h"
-#include "components/PhysicsC.h"
 #include "systems/MovementSystem.h"
 #include "components/SensorC.h"
 #include "components/MoveC.h"
@@ -26,6 +25,8 @@
 #include "systems/SpawnSystem.h"
 #include "systems/InputSystem.h"
 #include "systems/DiggerSystem.h"
+#include "systems/FallSystem.h"
+#include "LemmingBuilder.h"
 
 namespace ex = entityx;
 
@@ -35,17 +36,30 @@ public:
     explicit Game(SDL_Renderer *pRenderer) :
             _events(),
             _entities(_events),
-            _systems(_entities, _events) {
+            _systems(_entities, _events),
+            _builder(&_entities){
         _systems.add<RenderSystem>(pRenderer);
         _systems.add<AnimationSystem>();
         _systems.add<MovementSystem>();
         _systems.add<MoveSensorSystem>();
         _systems.add<DiggerSystem>(pRenderer);
-        _systems.add<PhysicsSystem>();
-        _systems.add<StateSystem>();
-        _systems.add<SpawnSystem>();
+        _systems.add<FallSystem>();
+        _systems.add<StateSystem>(&_builder);
+        _systems.add<SpawnSystem>(&_builder);
         _systems.add<InputSystem>();
         _systems.configure();
+
+//        CFG_File cfg;
+//        int result = CFG_OpenFile("game.cfg", &cfg);
+//        printf("file result %d \n", result);
+
+
+//        cfg.SelectGroup("Game");
+//        for (cfg.StartGroupIteration(); cfg.IsLastEntry(); cfg
+//                .SelectNextEntry()) {
+//            printf(cfg.ReadText(CFG_ENTRY_ITERATION, 0));
+//        }
+
 
         createGame();
         createBack(pRenderer);
@@ -53,7 +67,6 @@ public:
 
     void createGame() {
         ex::Entity game = _entities.create();
-
 
         game.assign<GameC>(40, 2500);
     }
@@ -81,6 +94,7 @@ public:
     };
 
 private:
+    LemmingBuilder _builder;
     ex::EntityManager _entities;
     ex::SystemManager _systems;
     ex::EventManager _events;

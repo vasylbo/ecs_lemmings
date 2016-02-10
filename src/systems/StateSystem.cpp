@@ -3,12 +3,10 @@
 //
 
 #include "StateSystem.h"
-#include "../components/LemmingC.h"
-#include "../components/GroundedC.h"
 #include "../components/AnimationC.h"
-#include "../events/StateChangeEvent.h"
 #include "../components/MoveC.h"
 #include "../components/DiggerC.h"
+#include "../components/AssetC.h"
 
 void StateSystem::update(entityx::EntityManager &entities,
                          entityx::EventManager &events,
@@ -24,12 +22,16 @@ void StateSystem::configure(entityx::EntityManager &entities,
 
 void StateSystem::receive(const entityx::ComponentAddedEvent<GroundedC>
                           &event) {
-//    printf("grounded\n");
+    entityx::Entity lemming = event.entity;
+    _builder->cleanLemming(lemming);
+    _builder->makeWalker(lemming);
 }
 
 void StateSystem::receive(const entityx::ComponentRemovedEvent<GroundedC>
                           &event) {
-//    printf("ungrounded\n");
+    entityx::Entity lemming = event.entity;
+    _builder->cleanLemming(lemming);
+    _builder->makeFalling(lemming);
 }
 
 void StateSystem::receive(const StateChangeEvent &event) {
@@ -41,13 +43,12 @@ void StateSystem::receive(const StateChangeEvent &event) {
         default:
             break;
     }
-
 }
 
-void StateSystem::switchToDigger(entityx::Entity* entity) {
-    if (!entity->has_component<DiggerC>()) {
-        entity->remove<MoveC>();
-        entity->remove<AnimationC>();
-        entity->assign<DiggerC>(5);
-    }
+void StateSystem::switchToDigger(entityx::Entity &lemming) {
+    _builder->cleanLemming(lemming);
+    _builder->makeDigger(lemming);
 }
+
+StateSystem::StateSystem(LemmingBuilder *pBuilder):
+        _builder(pBuilder) { }

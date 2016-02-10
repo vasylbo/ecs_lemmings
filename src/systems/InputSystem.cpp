@@ -7,8 +7,6 @@
 #include "../components/RenderC.h"
 #include "../components/PositionC.h"
 #include "../components/InteractiveC.h"
-#include "../components/MoveC.h"
-#include "../components/AnimationC.h"
 #include "../events/StateChangeEvent.h"
 
 void InputSystem::update(entityx::EntityManager &entities,
@@ -46,7 +44,7 @@ void InputSystem::update(entityx::EntityManager &entities,
 
             if (SDL_PointInRect(&_currentPos, &sprite)) {
                 // todo: do depth search to select only upper one
-                events.emit<StateChangeEvent>(LemmingType::DIGGER, &entity);
+                events.emit<StateChangeEvent>(LemmingType::DIGGER, entity);
                 return;
             }
         }
