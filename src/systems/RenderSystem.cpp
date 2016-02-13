@@ -25,6 +25,7 @@ void RenderSystem::update(ex::EntityManager &entities,
     _cachedSource.x = 0;
     _cachedSource.y = 0;
 
+
     SDL_RenderClear(_renderer);
     entities.each<RenderC, PositionC>([this](entityx::Entity pEntity,
                                              RenderC &pRenderC,

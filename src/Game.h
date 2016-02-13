@@ -3,7 +3,6 @@
 //
 #pragma once
 
-#include <SDL_config_lib.h>
 #include "SDL_render.h"
 #include "entityx/System.h"
 #include "entityx/Event.h"
@@ -37,7 +36,7 @@ public:
             _events(),
             _entities(_events),
             _systems(_entities, _events),
-            _builder(&_entities){
+            _builder(&_entities, &_events){
         _systems.add<RenderSystem>(pRenderer);
         _systems.add<AnimationSystem>();
         _systems.add<MovementSystem>();
@@ -48,18 +47,6 @@ public:
         _systems.add<SpawnSystem>(&_builder);
         _systems.add<InputSystem>();
         _systems.configure();
-
-//        CFG_File cfg;
-//        int result = CFG_OpenFile("game.cfg", &cfg);
-//        printf("file result %d \n", result);
-
-
-//        cfg.SelectGroup("Game");
-//        for (cfg.StartGroupIteration(); cfg.IsLastEntry(); cfg
-//                .SelectNextEntry()) {
-//            printf(cfg.ReadText(CFG_ENTRY_ITERATION, 0));
-//        }
-
 
         createGame();
         createBack(pRenderer);

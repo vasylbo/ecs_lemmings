@@ -7,12 +7,15 @@
 
 
 #include <entityx/Entity.h>
+#include "systems/InputSystem.h"
+
 namespace ex = entityx;
 
 class LemmingBuilder {
 public:
-    LemmingBuilder(ex::EntityManager *pEntities);
-    
+    LemmingBuilder(ex::EntityManager *pEntities,
+                   ex::EventManager *pEvents);
+
     ex::Entity makeLemming(int pX, int pY);
     ex::Entity makeFalling(ex::Entity &lemming);
     ex::Entity makeDigger(ex::Entity &lemming);
@@ -21,6 +24,7 @@ public:
 
 private:
     entityx::EntityManager *_entities;
+    entityx::EventManager *_events;
 };
 
 

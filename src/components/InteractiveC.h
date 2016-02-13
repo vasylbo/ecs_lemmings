@@ -6,9 +6,11 @@
 #define LEMMINGS_INTERACTIVEC_H
 
 #include <entityx/Entity.h>
+#include "../systems/InputSystem.h"
 
-// supposed to be only tag to show that object is interactive to mouse
 struct InteractiveC : entityx::Component<InteractiveC> {
-    InteractiveC() {}
+    InteractiveC(InputCallbackFN pOnClick): onClick(pOnClick) {}
+
+    InputCallbackFN onClick;
 };
 #endif //LEMMINGS_INTERACTIVEC_H

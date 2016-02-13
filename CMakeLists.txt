@@ -35,14 +35,6 @@ set_property(TARGET SDL_IMAGE PROPERTY IMPORTED_LOCATION
         ${SDL_IMAGE_LibDir}/libSDL2_image.a)
 set(SDL_IMAGE_Libs SDL_IMAGE)
 
-set(SDL_CONFIG_ROOT "${PROJECT_SOURCE_DIR}/libs/SDL_Config-1.2")
-set(SDL_CONFIG_Includes "${SDL_CONFIG_ROOT}/src")
-set(SDL_CONFIG_LibDir "${SDL_CONFIG_ROOT}/bin")
-add_library(SDL_CONFIG STATIC IMPORTED)
-set_property(TARGET SDL_CONFIG PROPERTY IMPORTED_LOCATION
-        ${SDL_CONFIG_LibDir}/SDL_Config.a})
-set(SDL_CONFIG_Libs SDL_CONFIG)
-
 # configure the project
 # include the SDL flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ${SDL2_Flags}")
@@ -52,9 +44,8 @@ set(SOURCE_FILES src/main.cpp src/Game.h src/systems/RenderSystem.cpp src/system
 add_executable(lemmings ${SOURCE_FILES})
 # include the SDL headers
 target_include_directories(lemmings SYSTEM PRIVATE ${SDL2_Includes}
-        ${EX_Includes} ${SDL_IMAGE_Includes} ${SDL_CONFIG_Includes})
+        ${EX_Includes} ${SDL_IMAGE_Includes})
 # link against the SDL (and its dependencies)
-target_link_libraries(lemmings ${SDL2_Libs} ${EX_Libs} ${SDL_IMAGE_Libs}
-        ${SDL_CONFIG})
+target_link_libraries(lemmings ${SDL2_Libs} ${EX_Libs} ${SDL_IMAGE_Libs})
 
 

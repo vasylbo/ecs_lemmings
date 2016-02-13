@@ -7,7 +7,6 @@
 #include "../components/RenderC.h"
 #include "../components/PositionC.h"
 #include "../components/InteractiveC.h"
-#include "../events/StateChangeEvent.h"
 
 void InputSystem::update(entityx::EntityManager &entities,
                          entityx::EventManager &events, entityx::TimeDelta dt) {
@@ -31,11 +30,13 @@ void InputSystem::update(entityx::EntityManager &entities,
     if (mouseUp) {
         PositionC *positionC;
         RenderC *renderC;
+        InteractiveC *interactiveC;
         SDL_Rect sprite;
         for (entityx::Entity entity : entities
                 .entities_with_components<PositionC, RenderC, InteractiveC>()) {
             positionC = entity.component<PositionC>().get();
             renderC = entity.component<RenderC>().get();
+            interactiveC = entity.component<InteractiveC>() .get();
 
             sprite.x = (int) (positionC->x - renderC->anchor.x);
             sprite.y = (int) (positionC->y - renderC->anchor.y);
@@ -44,7 +45,8 @@ void InputSystem::update(entityx::EntityManager &entities,
 
             if (SDL_PointInRect(&_currentPos, &sprite)) {
                 // todo: do depth search to select only upper one
-                events.emit<StateChangeEvent>(LemmingType::DIGGER, entity);
+                (*interactiveC->onClick)(entity, events);
+
                 return;
             }
         }

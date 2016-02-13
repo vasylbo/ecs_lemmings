@@ -12,10 +12,12 @@
 #include "components/MoveC.h"
 #include "components/InteractiveC.h"
 #include "components/DiggerC.h"
+#include "events/StateChangeEvent.h"
 
-LemmingBuilder::LemmingBuilder(ex::EntityManager *pEntities):
-    _entities(pEntities){
-
+LemmingBuilder::LemmingBuilder(ex::EntityManager *pEntities,
+                               ex::EventManager *pEvents):
+    _entities(pEntities),
+    _events(pEvents) {
 }
 
 ex::Entity LemmingBuilder::makeLemming(int pX, int pY) {
@@ -40,8 +42,12 @@ ex::Entity LemmingBuilder::makeDigger(ex::Entity &lemming) {
     lemming.assign<AnimationC>("dig", 15, 16, 27, 32, 32, 16);
     lemming.assign<DiggerC>(4, 600);
 
-
     return lemming;
+}
+
+//todo: find better place for this one
+void onLemmingClick(entityx::Entity entity, entityx::EventManager &events) {
+    events.emit<StateChangeEvent>(LemmingType::DIGGER, entity);
 }
 
 ex::Entity LemmingBuilder::makeWalker(ex::Entity &lemming) {
@@ -50,7 +56,8 @@ ex::Entity LemmingBuilder::makeWalker(ex::Entity &lemming) {
 
     lemming.assign<SensorC>(5, 5);
     lemming.assign<MoveC>(15);
-    lemming.assign<InteractiveC>();
+    // todo: clean up properly
+    lemming.assign<InteractiveC>(&onLemmingClick);
 
     return lemming;
 }
