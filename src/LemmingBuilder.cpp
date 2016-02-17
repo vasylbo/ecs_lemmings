@@ -14,6 +14,7 @@
 #include "components/DiggerC.h"
 #include "events/StateChangeEvent.h"
 #include "Constants.h"
+#include "components/LayerC.h"
 
 LemmingBuilder::LemmingBuilder(ex::EntityManager *pEntities,
                                ex::EventManager *pEvents):
@@ -26,6 +27,7 @@ ex::Entity LemmingBuilder::makeLemming(int pX, int pY) {
 
     lemming.assign<CanFallC>();
     lemming.assign<PositionC>(pX, pY);
+    lemming.assign<LayerC<constants::GAME_LAYER>>();
     lemming.assign<LemmingC>();
 
     return lemming;

@@ -48,6 +48,7 @@ int main(int, char **) {
     Game *game = new Game(renderer);
     loop(game);
 
+    delete game;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

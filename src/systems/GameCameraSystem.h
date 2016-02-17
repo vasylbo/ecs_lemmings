@@ -8,9 +8,9 @@
 
 #include <entityx/System.h>
 
-class CameraSystem : public entityx::System<CameraSystem> {
+class GameCameraSystem : public entityx::System<GameCameraSystem> {
 public:
-    CameraSystem() {};
+    GameCameraSystem() {};
 
     virtual void update(entityx::EntityManager &entities,
                         entityx::EventManager &events,

@@ -12,6 +12,10 @@ namespace constants {
     static const int GAME_WIDTH = 640;
     static const int GAME_HEIGHT = 320;
 
+    // layers
+    static constexpr int GAME_LAYER = 0;
+    static constexpr int GUI_LAYER = 1;
+
     static const int MAP_SCALE = 2;
 
     // map scroll

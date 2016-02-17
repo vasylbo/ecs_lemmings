@@ -7,6 +7,8 @@
 #include "../components/RenderC.h"
 #include "../components/PositionC.h"
 #include "../components/CameraC.h"
+#include "../Constants.h"
+#include "../components/LayerC.h"
 
 using namespace std;
 
@@ -23,36 +25,43 @@ RenderSystem::~RenderSystem() {
 void RenderSystem::update(ex::EntityManager &entities,
                           ex::EventManager &events,
                           ex::TimeDelta dt) {
-    auto it = entities.entities_with_components<CameraC>().begin();
-    PositionC *cameraPos = (*it).component<PositionC>().get();
     _cachedSource.x = 0;
     _cachedSource.y = 0;
 
-
+    PositionC *cameraPos;
+    RenderC *renderC;
+    PositionC *positionC;
     SDL_RenderClear(_renderer);
-    entities.each<RenderC, PositionC>([this, cameraPos](entityx::Entity pEntity,
-                                                        RenderC &pRenderC,
-                                                        PositionC &pPositionC) {
-        _cachedSource.x = pRenderC.sX;
-        _cachedSource.y = pRenderC.sY;
+    for (entityx::Entity cam : entities.entities_with_components<CameraC>()) {
+        cameraPos = cam.component<PositionC>().get();
+        for (entityx::Entity renderE : entities
+                .entities_with_components<RenderC, PositionC,
+                        LayerC<constants::GAME_LAYER>>()) {
+            renderC = renderE.component<RenderC>().get();
+            positionC = renderE.component<PositionC>().get();
 
-        _cachedDest.x = int(pPositionC.x + cameraPos->x) - pRenderC.anchor.x;
-        _cachedDest.y = int(pPositionC.y + cameraPos->y) - pRenderC.anchor.y;
+            _cachedSource.x = renderC->sX;
+            _cachedSource.y = renderC->sY;
 
-        _cachedDest.w = _cachedSource.w = pRenderC.w;
-        _cachedDest.h = _cachedSource.h = pRenderC.h;
+            _cachedDest.x = int(positionC->x + cameraPos->x) - renderC->anchor.x;
+            _cachedDest.y = int(positionC->y + cameraPos->y) - renderC->anchor.y;
 
-        if (pRenderC.flip) {
-            SDL_RenderCopyEx(_renderer,
-                           pRenderC.texture,
-                           &_cachedSource, &_cachedDest,
-                           0, NULL, SDL_FLIP_HORIZONTAL);
-        } else {
-            SDL_RenderCopy(_renderer,
-                           pRenderC.texture,
-                           &_cachedSource, &_cachedDest);
-        }
-    });
+            _cachedDest.w = _cachedSource.w = renderC->w;
+            _cachedDest.h = _cachedSource.h = renderC->h;
+
+            if (renderC->flip) {
+                SDL_RenderCopyEx(_renderer,
+                                 renderC->texture,
+                                 &_cachedSource, &_cachedDest,
+                                 0, NULL, SDL_FLIP_HORIZONTAL);
+            } else {
+                SDL_RenderCopy(_renderer,
+                               renderC->texture,
+                               &_cachedSource, &_cachedDest);
+            }
+        };
+    }
+
     SDL_RenderPresent(_renderer);
 }
 

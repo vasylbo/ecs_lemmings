@@ -2,15 +2,15 @@
 // Created by Vasyl.
 //
 
-#include "CameraSystem.h"
+#include "GameCameraSystem.h"
 #include "../components/MouseC.h"
 #include "../components/PositionC.h"
 #include "../components/CameraC.h"
 #include "../Constants.h"
 
-void CameraSystem::update(entityx::EntityManager &entities,
-                          entityx::EventManager &events,
-                          entityx::TimeDelta dt) {
+void GameCameraSystem::update(entityx::EntityManager &entities,
+                              entityx::EventManager &events,
+                              entityx::TimeDelta dt) {
     auto it = entities.entities_with_components<MouseC>().begin();
     PositionC *mousePos = (*it).component<PositionC>().get();
 

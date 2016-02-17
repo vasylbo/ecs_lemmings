@@ -30,7 +30,8 @@
 #include "components/MouseC.h"
 #include "components/CameraC.h"
 #include "Constants.h"
-#include "systems/CameraSystem.h"
+#include "systems/GameCameraSystem.h"
+#include "components/LayerC.h"
 
 namespace ex = entityx;
 
@@ -43,7 +44,7 @@ public:
             _systems(_entities, _events),
             _builder(&_entities, &_events){
         _systems.add<RenderSystem>(pRenderer);
-        _systems.add<CameraSystem>();
+        _systems.add<GameCameraSystem>();
         _systems.add<AnimationSystem>();
         _systems.add<MovementSystem>();
         _systems.add<MoveSensorSystem>();
@@ -67,9 +68,9 @@ public:
         game.assign<PositionC>(0, 0);
         game.assign<MouseC>();
 
-        ex::Entity camera = _entities.create();
-        camera.assign<PositionC>(0, 0);
-        camera.assign<CameraC>();
+        ex::Entity gameCamera = _entities.create();
+        gameCamera.assign<PositionC>(0, 0);
+        gameCamera.assign<CameraC>();
     }
 
     void createBack(SDL_Renderer *pRenderer) {
@@ -78,6 +79,7 @@ public:
         SDL_Surface *surface = SDL_LoadBMP("level.bmp");
         SDL_Texture *texture = SDL_CreateTextureFromSurface(pRenderer, surface);
 
+        back.assign<LayerC<constants::GAME_LAYER>>();
         back.assign<RenderC>(texture, constants::MAP_SCALE);
         back.assign<SurfaceC>(surface, constants::MAP_SCALE,
                               constants::MAP_STEP_HEIGHT);
@@ -89,6 +91,7 @@ public:
     };
 
     bool isActive() {
+        // do something
         return true;
     };
 
