@@ -6,6 +6,7 @@
 #include "RenderSystem.h"
 #include "../components/RenderC.h"
 #include "../components/PositionC.h"
+#include "../components/CameraC.h"
 
 using namespace std;
 
@@ -22,19 +23,21 @@ RenderSystem::~RenderSystem() {
 void RenderSystem::update(ex::EntityManager &entities,
                           ex::EventManager &events,
                           ex::TimeDelta dt) {
+    auto it = entities.entities_with_components<CameraC>().begin();
+    PositionC *cameraPos = (*it).component<PositionC>().get();
     _cachedSource.x = 0;
     _cachedSource.y = 0;
 
 
     SDL_RenderClear(_renderer);
-    entities.each<RenderC, PositionC>([this](entityx::Entity pEntity,
-                                             RenderC &pRenderC,
-                                             PositionC &pPositionC) {
+    entities.each<RenderC, PositionC>([this, cameraPos](entityx::Entity pEntity,
+                                                        RenderC &pRenderC,
+                                                        PositionC &pPositionC) {
         _cachedSource.x = pRenderC.sX;
         _cachedSource.y = pRenderC.sY;
 
-        _cachedDest.x = int(pPositionC.x) - pRenderC.anchor.x;
-        _cachedDest.y = int(pPositionC.y) - pRenderC.anchor.y;
+        _cachedDest.x = int(pPositionC.x + cameraPos->x) - pRenderC.anchor.x;
+        _cachedDest.y = int(pPositionC.y + cameraPos->y) - pRenderC.anchor.y;
 
         _cachedDest.w = _cachedSource.w = pRenderC.w;
         _cachedDest.h = _cachedSource.h = pRenderC.h;
@@ -66,7 +69,7 @@ void RenderSystem::receive(const ex::ComponentAddedEvent <AssetC> &event) {
     if (entity.has_component<RenderC>()) {
         entity.remove<RenderC>();
     }
-    entity.assign<RenderC>(texture);
+    entity.assign<RenderC>(texture, 0, 0);
 }
 
 SDL_Texture *RenderSystem::toTexture(const char *pId, SDL_Renderer *pRenderer) {

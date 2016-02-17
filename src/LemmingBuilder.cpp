@@ -13,6 +13,7 @@
 #include "components/InteractiveC.h"
 #include "components/DiggerC.h"
 #include "events/StateChangeEvent.h"
+#include "Constants.h"
 
 LemmingBuilder::LemmingBuilder(ex::EntityManager *pEntities,
                                ex::EventManager *pEvents):
@@ -40,7 +41,7 @@ ex::Entity LemmingBuilder::makeFalling(ex::Entity &lemming) {
 ex::Entity LemmingBuilder::makeDigger(ex::Entity &lemming) {
     lemming.assign<AssetC>("dig.png");
     lemming.assign<AnimationC>("dig", 15, 16, 27, 32, 32, 16);
-    lemming.assign<DiggerC>(4, 600);
+    lemming.assign<DiggerC>(constants::DIG_DEPTH, constants::DIG_INTERVAL);
 
     return lemming;
 }
@@ -54,8 +55,8 @@ ex::Entity LemmingBuilder::makeWalker(ex::Entity &lemming) {
     lemming.assign<AssetC>("walk.png");
     lemming.assign<AnimationC>("walk", 15, 6, 20, 12, 20, 5);
 
-    lemming.assign<SensorC>(5, 5);
-    lemming.assign<MoveC>(15);
+    lemming.assign<SensorC>(constants::SIGHT, constants::MAP_STEP_HEIGHT);
+    lemming.assign<MoveC>(constants::WALK_SPEED);
     // todo: clean up properly
     lemming.assign<InteractiveC>(&onLemmingClick);
 

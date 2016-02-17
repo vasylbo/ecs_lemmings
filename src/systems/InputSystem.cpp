@@ -7,16 +7,20 @@
 #include "../components/RenderC.h"
 #include "../components/PositionC.h"
 #include "../components/InteractiveC.h"
+#include "../components/MouseC.h"
+#include "../components/CameraC.h"
 
 void InputSystem::update(entityx::EntityManager &entities,
                          entityx::EventManager &events, entityx::TimeDelta dt) {
     SDL_Event event;
     bool mouseUp = false;
+    auto it = entities.entities_with_components<MouseC>().begin();
+    PositionC *mousePos = (*it).component<PositionC>().get();
     while (SDL_PollEvent(&event) != 0) {
         switch (event.type) {
             case SDL_MOUSEMOTION:
-                _currentPos.x = event.motion.x;
-                _currentPos.y = event.motion.y;
+                mousePos->x = event.motion.x;
+                mousePos->y = event.motion.y;
                 break;
             case SDL_MOUSEBUTTONUP:
                 mouseUp = true;
@@ -32,18 +36,22 @@ void InputSystem::update(entityx::EntityManager &entities,
         RenderC *renderC;
         InteractiveC *interactiveC;
         SDL_Rect sprite;
+        SDL_Point mousePoint = {(int) mousePos->x, (int) mousePos->y};
+        it = entities.entities_with_components<CameraC>().begin();
+        PositionC *cameraPos = (*it).component<PositionC>().get();
+
         for (entityx::Entity entity : entities
                 .entities_with_components<PositionC, RenderC, InteractiveC>()) {
             positionC = entity.component<PositionC>().get();
             renderC = entity.component<RenderC>().get();
             interactiveC = entity.component<InteractiveC>() .get();
 
-            sprite.x = (int) (positionC->x - renderC->anchor.x);
-            sprite.y = (int) (positionC->y - renderC->anchor.y);
+            sprite.x = (int) (positionC->x - renderC->anchor.x + cameraPos->x);
+            sprite.y = (int) (positionC->y - renderC->anchor.y + cameraPos->y);
             sprite.h = renderC->h;
             sprite.w = renderC->w;
 
-            if (SDL_PointInRect(&_currentPos, &sprite)) {
+            if (SDL_PointInRect(&mousePoint, &sprite)) {
                 // todo: do depth search to select only upper one
                 (*interactiveC->onClick)(entity, events);
 

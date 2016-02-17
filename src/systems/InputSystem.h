@@ -8,16 +8,15 @@
 #include <entityx/System.h>
 #include "SDL_Rect.h"
 
+
 typedef void (*InputCallbackFN)(entityx::Entity, entityx::EventManager &);
 
 class InputSystem : public entityx::System<InputSystem> {
 public:
-    InputSystem():_currentPos() { }
+    InputSystem() { }
     virtual void update(entityx::EntityManager &entities,
                         entityx::EventManager &events,
                         entityx::TimeDelta dt) override;
-private:
-    SDL_Point _currentPos;
 };
 
 

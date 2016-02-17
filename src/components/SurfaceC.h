@@ -13,12 +13,14 @@ struct SurfaceC : public entityx::Component<SurfaceC> {
     SurfaceC() {
     };
 
-    SurfaceC(SDL_Surface *pSurface, int pMaxDrop) :
+    SurfaceC(SDL_Surface *pSurface, double pScale, int pMaxDrop) :
             surface(pSurface),
+            scale(pScale),
             maxDrop(pMaxDrop) {
     };
 
     SDL_Surface *surface;
+    double scale;
     int maxDrop;
 };
 

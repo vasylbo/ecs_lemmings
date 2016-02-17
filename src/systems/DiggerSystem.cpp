@@ -12,19 +12,26 @@
 void DiggerSystem::update(entityx::EntityManager &entities,
                           entityx::EventManager &events,
                           entityx::TimeDelta dt) {
-    SDL_Surface*surface;
+    SurfaceC *surfaceC;
+    SDL_Surface *surface;
+    double scale;
     RenderC *renderC;
     PositionC *positionC;
     DiggerC *diggerC;
     int x;
     int y;
+    int digX;
+    int digY;
+    int pos;
 
     for (entityx::Entity world : entities
             .entities_with_components<SurfaceC, RenderC>()) {
-        surface = world.component<SurfaceC>().get()->surface;
+        surfaceC = world.component<SurfaceC>().get();
+        scale = surfaceC->scale;
+        surface = surfaceC->surface;
         renderC = world.component<RenderC>().get();
 
-        bool dirty = false;
+        bool dirty = false; // to know if texture replace needed
 
         SDL_LockSurface(surface);
 
@@ -36,13 +43,15 @@ void DiggerSystem::update(entityx::EntityManager &entities,
 
             diggerC->timeFromLastDig += dt * 1000;
 
-            if (diggerC->timeFromLastDig > diggerC->diggerInterval) {
+            if (diggerC->timeFromLastDig > diggerC->digInterval) {
                 x = (int) positionC->x;
                 y = (int) positionC->y;
 
                 for (int i = x - 7; i < x + 9; i++) {
-                    for (int j = y; j < y + diggerC->diggerSpeed; j++) {
-                        int pos = (j * surface->pitch) + i;
+                    for (int j = y; j < y + diggerC->digDepth; j++) {
+                        digX = (int) ceil(i / scale);
+                        digY = (int) ceil(j / scale);
+                        pos = (digY * surface->pitch) + digX;
                         pixels[pos] = 0;
                     }
                 }

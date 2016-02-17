@@ -29,8 +29,11 @@ void MoveSensorSystem::update(entityx::EntityManager &entities,
     }
 }
 
+// todo: refactor: duplicated vertical step
+// with surfaces. moveC no longer needed
 bool MoveSensorSystem::checkDirection(SurfaceC *pC, SensorC *pSensorC,
-                                      PositionC *pPositionC, MoveC *pMoveC, int step) {
+                                      PositionC *pPositionC,
+                                      MoveC *pMoveC, int step) {
     int testX = (int) pPositionC->x;
     int testY = (int) pPositionC->y - pSensorC->verticalStep - 1;
     int pixel;
@@ -38,7 +41,10 @@ bool MoveSensorSystem::checkDirection(SurfaceC *pC, SensorC *pSensorC,
     for (int i = 0; i < pSensorC->sight; i++) {
         testX += step;
 
-        pixel = getSurfacePixel(pC->surface, testX, testY);
+        pixel = utils::getSurfacePixel(
+                pC->surface,
+                pC->scale,
+                testX, testY);
 
         if (pixel > 0) {
             return true;

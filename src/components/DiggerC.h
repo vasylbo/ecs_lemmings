@@ -8,14 +8,14 @@
 #include <entityx/Entity.h>
 
 struct DiggerC : entityx::Component<DiggerC> {
-    DiggerC(int pDiggerSpeed, int pDiggerInterval) :
-                                diggerSpeed(pDiggerSpeed),
-                                diggerInterval(pDiggerInterval),
+    DiggerC(int pDigDepth, int pDigInterval) :
+                                digDepth(pDigDepth),
+                                digInterval(pDigInterval),
                                 timeFromLastDig(0) { }
 
     // static data
-    int diggerSpeed;
-    int diggerInterval;
+    int digDepth;
+    int digInterval;
 
     // dynamic data
     int timeFromLastDig;

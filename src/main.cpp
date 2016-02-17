@@ -1,6 +1,7 @@
 #include "windows.h"
 #include "SDL.h"
 #include "Game.h"
+#include "Constants.h"
 
 using namespace std;
 namespace ex = entityx;
@@ -38,7 +39,8 @@ int main(int, char **) {
     SDL_Window *window = SDL_CreateWindow(
             "Lemmins",
             SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-            640, 480, SDL_WINDOW_SHOWN);
+            constants::APP_WIDTH, constants::APP_HEIGHT,
+            SDL_WINDOW_SHOWN);
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
 
     showRendererInfo(renderer);

@@ -22,16 +22,20 @@ void FallSystem::update(entityx::EntityManager &entities,
                 .entities_with_components<CanFallC, PositionC>()) {
             positionC = unit.component<PositionC>().get();
 
-            pixel = getSurfacePixel(surface,
-                            (int) positionC->x,
-                            (int) positionC->y + 1);
+            pixel = utils::getSurfacePixel(
+                    surface,
+                    surfaceC->scale,
+                    (int) positionC->x,
+                    (int) positionC->y + 1);
 
             // todo: refactor
             if (pixel > 0) {
                 while (pixel != 0) {
                     positionC->y -= 1;
-                    pixel = getSurfacePixel(
-                            surface, (int) positionC->x, (int) positionC->y);
+                    pixel = utils::getSurfacePixel(
+                            surface,
+                            surfaceC->scale,
+                            (int) positionC->x, (int) positionC->y);
                 }
                 if (!unit.has_component<GroundedC>()) {
                     unit.assign<GroundedC>();
@@ -39,8 +43,9 @@ void FallSystem::update(entityx::EntityManager &entities,
             } else {
                 if (unit.has_component<GroundedC>()) {
                     for (int i = 1; i < surfaceC->maxDrop; i++) {
-                        pixel = getSurfacePixel(
+                        pixel = utils::getSurfacePixel(
                                 surface,
+                                surfaceC->scale,
                                 (int) positionC->x,
                                 (int) positionC->y + i);
                         if (pixel == 0) {
@@ -62,7 +67,7 @@ void FallSystem::update(entityx::EntityManager &entities,
 }
 
 FallSystem::FallSystem() {
-    _gravitySpeed = 9.8;
+    _gravitySpeed = 20.0;
 }
 
 

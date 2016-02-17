@@ -25,7 +25,12 @@
 #include "systems/InputSystem.h"
 #include "systems/DiggerSystem.h"
 #include "systems/FallSystem.h"
+#include "entityx/tags/TagsComponent.h"
 #include "LemmingBuilder.h"
+#include "components/MouseC.h"
+#include "components/CameraC.h"
+#include "Constants.h"
+#include "systems/CameraSystem.h"
 
 namespace ex = entityx;
 
@@ -38,6 +43,7 @@ public:
             _systems(_entities, _events),
             _builder(&_entities, &_events){
         _systems.add<RenderSystem>(pRenderer);
+        _systems.add<CameraSystem>();
         _systems.add<AnimationSystem>();
         _systems.add<MovementSystem>();
         _systems.add<MoveSensorSystem>();
@@ -55,17 +61,26 @@ public:
     void createGame() {
         ex::Entity game = _entities.create();
 
-        game.assign<GameC>(40, 2500);
+        game.assign<GameC>(40, constants::DEFAULT_SPAWN_INTERVAL);
+
+        ex::Entity mouse = _entities.create();
+        game.assign<PositionC>(0, 0);
+        game.assign<MouseC>();
+
+        ex::Entity camera = _entities.create();
+        camera.assign<PositionC>(0, 0);
+        camera.assign<CameraC>();
     }
 
     void createBack(SDL_Renderer *pRenderer) {
         ex::Entity back = _entities.create();
 
-        // todo: double load
         SDL_Surface *surface = SDL_LoadBMP("level.bmp");
+        SDL_Texture *texture = SDL_CreateTextureFromSurface(pRenderer, surface);
 
-        back.assign<AssetC>("level.bmp");
-        back.assign<SurfaceC>(surface, 5);
+        back.assign<RenderC>(texture, constants::MAP_SCALE);
+        back.assign<SurfaceC>(surface, constants::MAP_SCALE,
+                              constants::MAP_STEP_HEIGHT);
         back.assign<PositionC>(0, 0);
     }
 

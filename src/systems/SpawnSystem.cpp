@@ -23,7 +23,7 @@ void SpawnSystem::update(entityx::EntityManager &entities,
 
 }
 void SpawnSystem::createLemming(entityx::EntityManager &entities) {
-    entityx::Entity lemming = _builder->makeLemming(180, 60);
+    entityx::Entity lemming = _builder->makeLemming(440, 110);
     _builder->makeFalling(lemming);
 }
 

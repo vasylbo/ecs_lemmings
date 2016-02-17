@@ -2,14 +2,17 @@
 // Created by Vasyl.
 //
 
-#include <assert.h>
 #include "utils.h"
 
-Uint8 getSurfacePixel(SDL_Surface *pSurface, int x, int y) {
-    assert(x >= 0 && y >= 0 && x < pSurface->w && y < pSurface->h);
+Uint8 utils::getSurfacePixel(SDL_Surface *pSurface, int scale, int pX, int pY) {
+    pX /= scale;
+    pY /= scale;
+
+    assert(pX >= 0 && pY >= 0 && pX < pSurface->w && pY < pSurface->h);
     assert(pSurface->format->BitsPerPixel == 8);
 
-    Uint8* pixels = (Uint8 *) pSurface->pixels;
-    int pos = (y * pSurface->pitch) + x;
+    Uint8 *pixels = (Uint8 *) pSurface->pixels;
+    int pos = (pY * pSurface->pitch) + pX;
     return pixels[pos];
 }
+
