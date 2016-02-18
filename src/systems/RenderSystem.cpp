@@ -31,6 +31,7 @@ void RenderSystem::update(ex::EntityManager &entities,
     PositionC *cameraPos;
     RenderC *renderC;
     PositionC *positionC;
+    SDL_SetRenderDrawColor(_renderer, 0x0, 0x0, 0x0, 0xFF);
     SDL_RenderClear(_renderer);
     for (entityx::Entity cam : entities.entities_with_components<CameraC>()) {
         cameraPos = cam.component<PositionC>().get();
@@ -60,6 +61,26 @@ void RenderSystem::update(ex::EntityManager &entities,
                                &_cachedSource, &_cachedDest);
             }
         };
+    }
+    for (entityx::Entity element : entities.entities_with_components
+                   <RenderC, PositionC, LayerC<constants::GUI_LAYER>>()) {
+        renderC = element.component<RenderC>().get();
+        positionC = element.component<PositionC>().get();
+
+        _cachedSource.x = renderC->sX;
+        _cachedSource.y = renderC->sY;
+
+        _cachedDest.x = int(positionC->x) - renderC->anchor.x;
+        _cachedDest.y = int(positionC->y) - renderC->anchor.y;
+
+        _cachedDest.w = _cachedSource.w = renderC->w;
+        _cachedDest.h = _cachedSource.h = renderC->h;
+
+        SDL_RenderCopy(_renderer,
+                       renderC->texture,
+                       &_cachedSource,
+                       &_cachedDest);
+
     }
 
     SDL_RenderPresent(_renderer);

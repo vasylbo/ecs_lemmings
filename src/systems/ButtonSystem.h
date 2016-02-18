@@ -6,8 +6,28 @@
 #define LEMMINGS_BUTTONSYSTEM_H
 
 
-class ButtonSystem {
+#include <entityx/System.h>
+#include "../components/ButtonC.h"
 
+class ButtonSystem :
+        public entityx::System<ButtonSystem>,
+        public entityx::Receiver<ButtonSystem> {
+public:
+    ButtonSystem(){};
+    virtual void configure(entityx::EntityManager &entities,
+                           entityx::EventManager &events) override;
+
+    void receive(const entityx::ComponentAddedEvent<ButtonC>&);
+    void receive(const entityx::ComponentRemovedEvent<ButtonC>&);
+
+    virtual void update(entityx::EntityManager &entities,
+                        entityx::EventManager &events,
+                        entityx::TimeDelta dt) override;
+
+    virtual ~ButtonSystem();
+
+private:
+    entityx::EventManager *_events;
 };
 
 

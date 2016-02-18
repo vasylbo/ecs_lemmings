@@ -32,6 +32,7 @@
 #include "Constants.h"
 #include "systems/GameCameraSystem.h"
 #include "components/LayerC.h"
+#include "systems/ButtonSystem.h"
 
 namespace ex = entityx;
 
@@ -52,11 +53,13 @@ public:
         _systems.add<FallSystem>();
         _systems.add<StateSystem>(&_builder);
         _systems.add<SpawnSystem>(&_builder);
+        _systems.add<ButtonSystem>();
         _systems.add<InputSystem>();
         _systems.configure();
 
         createGame();
         createBack(pRenderer);
+        createGui(pRenderer);
     }
 
     void createGame() {
@@ -84,6 +87,34 @@ public:
         back.assign<SurfaceC>(surface, constants::MAP_SCALE,
                               constants::MAP_STEP_HEIGHT);
         back.assign<PositionC>(0, 0);
+    }
+
+    void createGui(SDL_Renderer *pRenderer) {
+        ex::Entity button;
+
+        for (int i = 0; i < 5; i++) {
+            button = _entities.create();
+            button.assign<PositionC>(i * 100, constants::GAME_HEIGHT);
+            button.assign<LayerC<constants::GUI_LAYER>>();
+            button.assign<RenderC>(generateButtonTexture(pRenderer), 0, 0);
+            button.assign<ButtonC>();
+        }
+    }
+
+    SDL_Texture *generateButtonTexture(SDL_Renderer *pRenderer) {
+        SDL_Texture *texture = SDL_CreateTexture(pRenderer,
+                                                 SDL_PIXELFORMAT_ARGB8888,
+                                                 SDL_TEXTUREACCESS_TARGET,
+                                                 80, 80);
+
+        SDL_SetRenderTarget(pRenderer, texture);
+
+        SDL_SetRenderDrawColor(pRenderer, 0xAA, 0xAA, 0xAA, 0xFF);
+        SDL_RenderClear(pRenderer);
+
+        SDL_SetRenderTarget(pRenderer, NULL);
+
+        return texture;
     }
 
     void update(ex::TimeDelta dt) {

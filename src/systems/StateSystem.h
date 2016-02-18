@@ -16,7 +16,6 @@ class StateSystem : public entityx::System<StateSystem>,
 public:
     StateSystem(LemmingBuilder* pBuilder);
 
-
     virtual void configure(entityx::EntityManager &entities,
                            entityx::EventManager &events) override;
 
