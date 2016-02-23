@@ -7,7 +7,12 @@
 
 #include <entityx/Entity.h>
 
+enum ButtonType {
+    ASSIGN_JOB
+};
 struct ButtonC : public entityx::Component<ButtonC> {
+    ButtonC(ButtonType pType):type(pType){};
 
+    ButtonType type;
 };
 #endif //LEMMINGS_BUTTONC_H

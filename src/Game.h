@@ -97,7 +97,7 @@ public:
             button.assign<PositionC>(i * 100, constants::GAME_HEIGHT);
             button.assign<LayerC<constants::GUI_LAYER>>();
             button.assign<RenderC>(generateButtonTexture(pRenderer), 0, 0);
-            button.assign<ButtonC>();
+            button.assign<ButtonC>(ButtonType::ASSIGN_JOB);
         }
     }
 
