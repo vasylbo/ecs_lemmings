@@ -31,5 +31,4 @@ void GameCameraSystem::update(entityx::EntityManager &entities,
         cameraPos->x -= constants::SCROLL_SPEED * dt;
         if (cameraPos->x < 0) cameraPos->x = 0;
     }
-    printf("camera pos %f \n", cameraPos->x);
 }

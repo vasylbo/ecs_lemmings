@@ -4,6 +4,7 @@
 
 #include "ButtonSystem.h"
 #include "../components/InteractiveC.h"
+#include "../components/RenderC.h"
 
 void ButtonSystem::configure(entityx::EntityManager &entities,
                              entityx::EventManager &events) {
@@ -14,6 +15,17 @@ void ButtonSystem::configure(entityx::EntityManager &entities,
 
 void onButtonClick(entityx::Entity entity, entityx::EventManager &events) {
     printf("button clicked\n");
+
+
+    ButtonC *buttonC = entity.component<ButtonC>().get();
+    RenderC *renderC = entity.component<RenderC>().get();
+    if (buttonC->state == ButtonState::IDLE) {
+        SDL_SetTextureColorMod(renderC->texture, 255, 0, 0);
+        buttonC->state = ButtonState::SELECTED;
+    } else {
+        SDL_SetTextureColorMod(renderC->texture, 255, 255, 255);
+        buttonC->state = ButtonState::IDLE;
+    }
 }
 
 void ButtonSystem::receive(const entityx::ComponentAddedEvent<ButtonC> &event) {

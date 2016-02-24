@@ -3,8 +3,7 @@
 //
 
 #include "AnimationSystem.h"
-#include "../components/AnimationC.h"
-#include "../components/RenderC.h"
+#include "../components/AssetC.h"
 
 namespace ex = entityx;
 
@@ -24,15 +23,42 @@ void AnimationSystem::update(entityx::EntityManager &entities,
             aC->currentFrame = (aC->currentFrame + 1) %
                                aC->fCount;
             renderC = entity.component<RenderC>().get();
-            renderC->sX = aC->fX + aC->fW * aC->currentFrame;
-            renderC->sX = aC->fX + aC->fW * aC->currentFrame;
-            renderC->w = aC->fW;
-            renderC->h = aC->fH;
-            renderC->anchor.x = aC->aX;
-            renderC->anchor.y = aC->aY;
-
+            updateAnimation(renderC, aC);
             aC->timeSinceLastFrame = 0;
         }
     }
-
 }
+
+void AnimationSystem::configure(entityx::EntityManager &entities,
+                                entityx::EventManager &events) {
+    events.subscribe<entityx::ComponentAddedEvent<AnimationC>>(*this);
+}
+
+void AnimationSystem::receive(
+        const entityx::ComponentAddedEvent<AnimationC> &event) {
+    auto entity = event.entity;
+    auto animationC = entity.component<AnimationC>().get();
+
+    // will add a render component here
+    entity.assign<AssetC>(animationC->id);
+
+    auto renderC = entity.component<RenderC>().get();
+    updateAnimation(renderC, animationC);
+}
+
+inline void AnimationSystem::updateAnimation(
+        RenderC *pRenderC,
+        AnimationC *pAnimationC) {
+    pRenderC->sX = pAnimationC->fX + pAnimationC->fW * pAnimationC->currentFrame;
+    pRenderC->sX = pAnimationC->fX + pAnimationC->fW * pAnimationC->currentFrame;
+    pRenderC->w = pAnimationC->fW;
+    pRenderC->h = pAnimationC->fH;
+    pRenderC->anchor.x = pAnimationC->aX;
+    pRenderC->anchor.y = pAnimationC->aY;
+}
+
+
+
+
+
+

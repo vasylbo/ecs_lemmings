@@ -34,15 +34,13 @@ ex::Entity LemmingBuilder::makeLemming(int pX, int pY) {
 }
 
 ex::Entity LemmingBuilder::makeFalling(ex::Entity &lemming) {
-    lemming.assign<AssetC>("fall.png");
-    lemming.assign<AnimationC>("fall", 15, 6, 18, 12, 18, 4);
+    lemming.assign<AnimationC>("fall.png", 15, 6, 18, 12, 18, 4);
 
     return lemming;
 }
 
 ex::Entity LemmingBuilder::makeDigger(ex::Entity &lemming) {
-    lemming.assign<AssetC>("dig.png");
-    lemming.assign<AnimationC>("dig", 15, 16, 27, 32, 32, 16);
+    lemming.assign<AnimationC>("dig.png", 15, 16, 27, 32, 32, 16);
     lemming.assign<DiggerC>(constants::DIG_DEPTH, constants::DIG_INTERVAL);
 
     return lemming;
@@ -55,8 +53,7 @@ void onLemmingClick(entityx::Entity entity, entityx::EventManager &events) {
 }
 
 ex::Entity LemmingBuilder::makeWalker(ex::Entity &lemming) {
-    lemming.assign<AssetC>("walk.png");
-    lemming.assign<AnimationC>("walk", 15, 6, 20, 12, 20, 5);
+    lemming.assign<AnimationC>("walk.png", 15, 6, 20, 12, 20, 5);
 
     lemming.assign<SensorC>(constants::SIGHT, constants::MAP_STEP_HEIGHT);
     lemming.assign<MoveC>(constants::WALK_SPEED);

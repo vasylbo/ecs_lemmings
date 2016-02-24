@@ -21,6 +21,9 @@ struct GameC : public entityx::Component<GameC> {
     // dynamic data (to lazy to separate)
     int timeFromLastLemming;
     int lemmingsCreated;
+
+    // can have raw entity here, because its only an id holder
+    entityx::Entity selectedButton;
 };
 
 #endif //LEMMINGS_GAMEC_H
