@@ -3,14 +3,14 @@
 //
 
 #include <SDL_events.h>
-#include "InputSystem.h"
+#include "InteractiveSystem.h"
 #include "../components/RenderC.h"
 #include "../components/PositionC.h"
 #include "../components/InteractiveC.h"
 #include "../components/MouseC.h"
 #include "../components/CameraC.h"
 
-void InputSystem::update(entityx::EntityManager &entities,
+void InteractiveSystem::update(entityx::EntityManager &entities,
                          entityx::EventManager &events, entityx::TimeDelta dt) {
     SDL_Event event;
     bool mouseUp = false;
@@ -46,8 +46,8 @@ void InputSystem::update(entityx::EntityManager &entities,
             renderC = entity.component<RenderC>().get();
             interactiveC = entity.component<InteractiveC>() .get();
 
-            sprite.x = (int) (positionC->x - renderC->anchor.x + cameraPos->x);
-            sprite.y = (int) (positionC->y - renderC->anchor.y + cameraPos->y);
+            sprite.x = (int) (positionC->x - renderC->anchor.x - cameraPos->x);
+            sprite.y = (int) (positionC->y - renderC->anchor.y - cameraPos->y);
             sprite.h = renderC->h;
             sprite.w = renderC->w;
 

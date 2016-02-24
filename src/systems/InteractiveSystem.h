@@ -11,9 +11,9 @@
 
 typedef void (*InputCallbackFN)(entityx::Entity, entityx::EventManager &);
 
-class InputSystem : public entityx::System<InputSystem> {
+class InteractiveSystem : public entityx::System<InteractiveSystem> {
 public:
-    InputSystem() { }
+    InteractiveSystem() { }
     virtual void update(entityx::EntityManager &entities,
                         entityx::EventManager &events,
                         entityx::TimeDelta dt) override;

@@ -48,6 +48,7 @@ ex::Entity LemmingBuilder::makeDigger(ex::Entity &lemming) {
     return lemming;
 }
 
+
 //todo: find better place for this one
 void onLemmingClick(entityx::Entity entity, entityx::EventManager &events) {
     events.emit<StateChangeEvent>(LemmingType::DIGGER, entity);
@@ -77,3 +78,10 @@ void LemmingBuilder::cleanLemming(ex::Entity &lemming) {
         lemming.remove<DiggerC>();
     }
 }
+
+LemmingBuilder::~LemmingBuilder() {
+    _entities = NULL;
+    _events = NULL;
+}
+
+

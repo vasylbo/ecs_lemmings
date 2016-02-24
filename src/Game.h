@@ -22,7 +22,7 @@
 #include "components/AnimationC.h"
 #include "systems/StateSystem.h"
 #include "systems/SpawnSystem.h"
-#include "systems/InputSystem.h"
+#include "systems/InteractiveSystem.h"
 #include "systems/DiggerSystem.h"
 #include "systems/FallSystem.h"
 #include "entityx/tags/TagsComponent.h"
@@ -54,7 +54,7 @@ public:
         _systems.add<StateSystem>(&_builder);
         _systems.add<SpawnSystem>(&_builder);
         _systems.add<ButtonSystem>();
-        _systems.add<InputSystem>();
+        _systems.add<InteractiveSystem>();
         _systems.configure();
 
         createGame();

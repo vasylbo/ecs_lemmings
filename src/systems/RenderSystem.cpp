@@ -44,8 +44,8 @@ void RenderSystem::update(ex::EntityManager &entities,
             _cachedSource.x = renderC->sX;
             _cachedSource.y = renderC->sY;
 
-            _cachedDest.x = int(positionC->x + cameraPos->x) - renderC->anchor.x;
-            _cachedDest.y = int(positionC->y + cameraPos->y) - renderC->anchor.y;
+            _cachedDest.x = int(positionC->x - cameraPos->x) - renderC->anchor.x;
+            _cachedDest.y = int(positionC->y - cameraPos->y) - renderC->anchor.y;
 
             _cachedDest.w = _cachedSource.w = renderC->w;
             _cachedDest.h = _cachedSource.h = renderC->h;

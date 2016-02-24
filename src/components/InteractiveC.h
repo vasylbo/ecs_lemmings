@@ -6,7 +6,7 @@
 #define LEMMINGS_INTERACTIVEC_H
 
 #include <entityx/Entity.h>
-#include "../systems/InputSystem.h"
+#include "../systems/InteractiveSystem.h"
 
 struct InteractiveC : entityx::Component<InteractiveC> {
     InteractiveC(InputCallbackFN pOnClick): onClick(pOnClick) {}

@@ -7,7 +7,7 @@
 
 
 #include <entityx/Entity.h>
-#include "systems/InputSystem.h"
+#include "systems/InteractiveSystem.h"
 
 namespace ex = entityx;
 
@@ -21,6 +21,8 @@ public:
     ex::Entity makeDigger(ex::Entity &lemming);
     ex::Entity makeWalker(ex::Entity &lemming);
     void cleanLemming(ex::Entity &lemming);
+
+    ~LemmingBuilder();
 
 private:
     entityx::EntityManager *_entities;
