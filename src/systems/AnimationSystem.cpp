@@ -19,7 +19,7 @@ void AnimationSystem::update(entityx::EntityManager &entities,
         aC->timeSinceLastFrame += dt * 1000;
 
         if (aC->timeSinceLastFrame > aC->frameTime) {
-            // calculate frames to skip if timeSinceLastFrame is too big
+            // todo: calculate frames to skip if timeSinceLastFrame is too big
             aC->currentFrame = (aC->currentFrame + 1) %
                                aC->fCount;
             renderC = entity.component<RenderC>().get();

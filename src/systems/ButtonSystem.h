@@ -28,6 +28,7 @@ public:
 
 private:
     entityx::EventManager *_events;
+    entityx::EntityManager *_entities;
 };
 
 

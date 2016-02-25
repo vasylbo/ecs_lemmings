@@ -9,7 +9,10 @@
 #include "SDL_Rect.h"
 
 
-typedef void (*InputCallbackFN)(entityx::Entity, entityx::EventManager &);
+typedef void (*InputCallbackFN)(
+        entityx::Entity,
+        entityx::EntityManager &,
+        entityx::EventManager &);
 
 class InteractiveSystem : public entityx::System<InteractiveSystem> {
 public:

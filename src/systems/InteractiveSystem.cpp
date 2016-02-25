@@ -11,7 +11,8 @@
 #include "../components/CameraC.h"
 
 void InteractiveSystem::update(entityx::EntityManager &entities,
-                         entityx::EventManager &events, entityx::TimeDelta dt) {
+                               entityx::EventManager &events,
+                               entityx::TimeDelta dt) {
     SDL_Event event;
     bool mouseUp = false;
     auto it = entities.entities_with_components<MouseC>().begin();
@@ -26,7 +27,7 @@ void InteractiveSystem::update(entityx::EntityManager &entities,
                 mouseUp = true;
                 break;
             default:
-//                printf("event %d \n", event.type);
+                // printf("event %d \n", event.type);
                 break;
         }
     }
@@ -44,7 +45,7 @@ void InteractiveSystem::update(entityx::EntityManager &entities,
                 .entities_with_components<PositionC, RenderC, InteractiveC>()) {
             positionC = entity.component<PositionC>().get();
             renderC = entity.component<RenderC>().get();
-            interactiveC = entity.component<InteractiveC>() .get();
+            interactiveC = entity.component<InteractiveC>().get();
 
             sprite.x = (int) (positionC->x - renderC->anchor.x - cameraPos->x);
             sprite.y = (int) (positionC->y - renderC->anchor.y - cameraPos->y);
@@ -53,7 +54,7 @@ void InteractiveSystem::update(entityx::EntityManager &entities,
 
             if (SDL_PointInRect(&mousePoint, &sprite)) {
                 // todo: do depth search to select only upper one
-                (*interactiveC->onClick)(entity, events);
+                (*interactiveC->onClick)(entity, entities, events);
 
                 return;
             }
