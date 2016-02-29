@@ -2,17 +2,16 @@
 // Created by Vasyl.
 //
 
-#ifndef LEMMINGS_DIGGERSYSTEM_H
-#define LEMMINGS_DIGGERSYSTEM_H
+#ifndef LEMMINGS_BUILDERSYSTEM_H
+#define LEMMINGS_BUILDERSYSTEM_H
 
 
 #include <entityx/System.h>
 #include <SDL_render.h>
 
-class DiggerSystem : public entityx::System<DiggerSystem> {
+class BuilderSystem : public entityx::System<BuilderSystem> {
 public:
-
-    DiggerSystem(SDL_Renderer *pRenderer) : _renderer(pRenderer) {}
+    BuilderSystem(SDL_Renderer *pRenderer);
 
     virtual void update(entityx::EntityManager &entities,
                         entityx::EventManager &events,
@@ -23,4 +22,4 @@ private:
 };
 
 
-#endif //LEMMINGS_DIGGERSYSTEM_H
+#endif //LEMMINGS_BUILDERSYSTEM_H

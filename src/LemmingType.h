@@ -8,6 +8,7 @@
 enum LemmingType {
     CASUAL,
     DIGGER,
+    BUILDER,
     BOMBER,
     STOPPER
 };

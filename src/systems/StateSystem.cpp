@@ -35,19 +35,20 @@ void StateSystem::receive(const entityx::ComponentRemovedEvent<GroundedC>
 }
 
 void StateSystem::receive(const StateChangeEvent &event) {
+    ex::Entity lemming = event.entity;
+    _builder->cleanLemming(lemming);
     switch (event.newType) {
         case LemmingType::DIGGER:
-            switchToDigger(event.entity);
+            _builder->makeDigger(lemming);
+            break;
+
+        case LemmingType::BUILDER:
+            _builder->makeBuilder(lemming);
             break;
 
         default:
             break;
     }
-}
-
-void StateSystem::switchToDigger(entityx::Entity &lemming) {
-    _builder->cleanLemming(lemming);
-    _builder->makeDigger(lemming);
 }
 
 StateSystem::StateSystem(LemmingBuilder *pBuilder):

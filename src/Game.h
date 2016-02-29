@@ -33,6 +33,7 @@
 #include "systems/GameCameraSystem.h"
 #include "components/LayerC.h"
 #include "systems/ButtonSystem.h"
+#include "systems/BuilderSystem.h"
 
 namespace ex = entityx;
 
@@ -49,6 +50,7 @@ public:
         _systems.add<AnimationSystem>();
         _systems.add<MovementSystem>();
         _systems.add<MoveSensorSystem>();
+        _systems.add<BuilderSystem>(pRenderer);
         _systems.add<DiggerSystem>(pRenderer);
         _systems.add<FallSystem>();
         _systems.add<StateSystem>(&_builder);

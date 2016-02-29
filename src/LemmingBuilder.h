@@ -20,6 +20,7 @@ public:
     ex::Entity makeFalling(ex::Entity &lemming);
     ex::Entity makeDigger(ex::Entity &lemming);
     ex::Entity makeWalker(ex::Entity &lemming);
+    ex::Entity makeBuilder(ex::Entity &lemming);
     void cleanLemming(ex::Entity &lemming);
 
     ~LemmingBuilder();

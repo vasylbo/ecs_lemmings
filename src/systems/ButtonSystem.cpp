@@ -72,5 +72,5 @@ ButtonSystem::~ButtonSystem() {
 void ButtonSystem::update(entityx::EntityManager &entities,
                           entityx::EventManager &events,
                           entityx::TimeDelta dt) {
-
+    // nothing to do here
 }

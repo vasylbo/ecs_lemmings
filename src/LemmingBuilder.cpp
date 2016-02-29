@@ -15,6 +15,7 @@
 #include "events/StateChangeEvent.h"
 #include "Constants.h"
 #include "components/LayerC.h"
+#include "components/BuilderC.h"
 
 LemmingBuilder::LemmingBuilder(ex::EntityManager *pEntities,
                                ex::EventManager *pEvents):
@@ -46,12 +47,24 @@ ex::Entity LemmingBuilder::makeDigger(ex::Entity &lemming) {
     return lemming;
 }
 
+ex::Entity LemmingBuilder::makeBuilder(ex::Entity &lemming) {
+    lemming.remove<CanFallC>();
+    lemming.assign<AnimationC>("build.gif", 15,
+        16, 27,
+        32, 32,
+        16
+    );
+    lemming.assign<BuilderC>();
+
+    return lemming;
+}
+
 
 //todo: find better place for this one
 void onLemmingClick(entityx::Entity entity,
                     entityx::EntityManager &entities,
                     entityx::EventManager &events) {
-    events.emit<StateChangeEvent>(LemmingType::DIGGER, entity);
+    events.emit<StateChangeEvent>(LemmingType::BUILDER, entity);
 }
 
 ex::Entity LemmingBuilder::makeWalker(ex::Entity &lemming) {
@@ -75,6 +88,9 @@ void LemmingBuilder::cleanLemming(ex::Entity &lemming) {
     }
     if (lemming.has_component<DiggerC>()) {
         lemming.remove<DiggerC>();
+    }
+    if (lemming.has_component<BuilderC>()) {
+        lemming.remove<BuilderC>();
     }
 }
 
