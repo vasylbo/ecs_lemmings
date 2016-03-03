@@ -10,7 +10,7 @@
 #include <entityx/Entity.h>
 
 namespace utils {
-    Uint8 getSurfacePixel(SDL_Surface *pSurface, int pScale, int pX, int pY);
+    unsigned int getSurfacePixel(SDL_Surface *pSurface, double pScale, int pX, int pY);
 }
 
 #endif //LEMMINGS_UTILS_H

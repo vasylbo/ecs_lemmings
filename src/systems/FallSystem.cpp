@@ -13,7 +13,7 @@ void FallSystem::update(entityx::EntityManager &entities,
                         entityx::EventManager &events,
                         entityx::TimeDelta dt) {
     PositionC *positionC;
-    Uint8 pixel;
+    unsigned int pixel;
 
     for (entityx::Entity ground : entities.entities_with_components<SurfaceC>()) {
         SurfaceC *surfaceC = ground.component<SurfaceC>().get();

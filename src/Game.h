@@ -3,6 +3,7 @@
 //
 #pragma once
 
+#include <SDL2/SDL_image.h>
 #include "SDL_render.h"
 #include "entityx/System.h"
 #include "entityx/Event.h"
@@ -59,6 +60,9 @@ public:
         _systems.add<InteractiveSystem>();
         _systems.configure();
 
+        int pngFlags = IMG_INIT_PNG;
+        IMG_Init(pngFlags);
+
         createGame();
         createBack(pRenderer);
         createGui(pRenderer);
@@ -81,8 +85,28 @@ public:
     void createBack(SDL_Renderer *pRenderer) {
         ex::Entity back = _entities.create();
 
-        SDL_Surface *surface = SDL_LoadBMP("level.bmp");
-        SDL_Texture *texture = SDL_CreateTextureFromSurface(pRenderer, surface);
+        SDL_Surface *surface = IMG_Load("level.png");
+        int w, h;
+        printf("surface %d %d %d \n",
+               surface->format->BitsPerPixel,
+                surface->pitch / surface->w, surface->pitch);
+        SDL_Texture *texture = SDL_CreateTexture(pRenderer,
+                                                 surface->format->format,
+                                                 SDL_TEXTUREACCESS_STREAMING,
+                                                 surface->w, surface->h);
+        if (!texture) {
+            printf("texture cant be created %s \n", SDL_GetError());
+        }
+
+        SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
+
+        void *pixels;
+        int pitch;
+        SDL_LockTexture(texture, nullptr, &pixels, &pitch);
+        memcpy(pixels, surface->pixels, (size_t) surface->h * pitch);
+        SDL_UnlockTexture(texture);
+
+
 
         back.assign<LayerC<constants::GAME_LAYER>>();
         back.assign<RenderC>(texture, constants::MAP_SCALE);

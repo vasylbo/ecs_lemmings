@@ -14,8 +14,8 @@ using namespace std;
 
 RenderSystem::RenderSystem(SDL_Renderer *pRenderer) :
         _renderer(pRenderer) {
-    int pngFlags = IMG_INIT_PNG;
-    IMG_Init(pngFlags);
+//    int pngFlags = IMG_INIT_PNG;
+//    IMG_Init(pngFlags);
 }
 
 RenderSystem::~RenderSystem() {

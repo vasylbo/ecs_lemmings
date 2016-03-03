@@ -61,6 +61,7 @@ void DiggerSystem::update(entityx::EntityManager &entities,
             }
         }
         SDL_UnlockSurface(surface);
+
         if (dirty) {
             renderC->texture =
                     SDL_CreateTextureFromSurface(_renderer, surface);

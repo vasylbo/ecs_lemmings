@@ -11,6 +11,8 @@
 
 BuilderSystem::BuilderSystem(SDL_Renderer *pRenderer):_renderer(pRenderer) {}
 
+//todo: even position y on adding to system
+
 void BuilderSystem::update(entityx::EntityManager &entities,
                            entityx::EventManager &events,
                            entityx::TimeDelta dt) {
@@ -21,11 +23,13 @@ void BuilderSystem::update(entityx::EntityManager &entities,
     SDL_Surface *surface = surfaceC->surface;
     RenderC *surfaceRenderC = surfaceE.component<RenderC>().get();
 
-    Uint8 *pixels = (Uint8*) surface->pixels;
+    void *rawPixels;
 
-    Uint8 pixel(120);
-    bool dirty = false;
-    SDL_LockSurface(surface);
+    int pitch;
+    SDL_LockTexture(surfaceRenderC->texture, nullptr, &rawPixels, &pitch);
+
+    unsigned char *pixels = (unsigned char *) rawPixels;
+
 
     for (entityx::Entity unit : entities
             .entities_with_components<BuilderC, PositionC>()) {
@@ -33,36 +37,32 @@ void BuilderSystem::update(entityx::EntityManager &entities,
         PositionC *positionC = unit.component<PositionC>().get();
         BuilderC *builderC = unit.component<BuilderC>().get();
 
-        printf("animation frame %d \n", animationC->currentFrame);
         if (animationC->currentFrame == 0 &&
                 builderC->lastFrame == animationC->fCount - 1) {
             int x = (int) positionC->x;
             int y = (int) positionC->y;
 
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 1; j++) {
+            for (int i = -1; i < 9; i++) {
+                for (int j = -4; j < -3; j++) {
                     int buildX = (int) ((x + i) / scale);
                     int buildY = (int) ((y - j) / scale);
-                    int pos = (buildY * surface->pitch) + buildX;
+                    int pos = (buildY * surface->pitch) + buildX * 3;
 
-                    pixels[pos] = pixel;
+                    pixels[pos] = 247;
+                    pixels[++pos] = 214;
+                    pixels[++pos] = 214;
                 }
             }
 
-            positionC->x += 4;
-            positionC->y -= 2;
-
-            dirty = true;
+            //has to do it pixel perfect
+            positionC->x = (int) positionC->x + 4;
+            positionC->y = (int) positionC->y - 2;
         }
 
         builderC->lastFrame = animationC->currentFrame;
     }
 
-    SDL_UnlockSurface(surface);
-    if (dirty) {
-        surfaceRenderC->texture = SDL_CreateTextureFromSurface(
-                _renderer, surface);
-    }
+    SDL_UnlockTexture(surfaceRenderC->texture);
 }
 
 
