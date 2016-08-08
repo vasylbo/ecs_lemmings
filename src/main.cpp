@@ -1,7 +1,6 @@
 #include "windows.h"
 #include "SDL.h"
 #include "Game.h"
-#include "Constants.h"
 
 using namespace std;
 namespace ex = entityx;
@@ -13,12 +12,12 @@ void showRendererInfo(SDL_Renderer *pRenderer) {
     printf("Renderer type %s \n", rendererInfo.name);
 }
 
-void loop(Game *pGame) {
+void loop(Game &pGame) {
     int start = SDL_GetTicks();
     int end;
     double dt;
-    while (pGame->isActive()) {
-        pGame->update(dt);
+    while (pGame.isActive()) {
+        pGame.update(dt);
         SDL_Delay(15);
 
         end = SDL_GetTicks();
@@ -45,10 +44,9 @@ int main(int, char **) {
 
     showRendererInfo(renderer);
 
-    Game *game = new Game(renderer);
+    Game game(renderer);
     loop(game);
 
-    delete game;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
