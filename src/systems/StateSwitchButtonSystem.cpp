@@ -11,7 +11,6 @@ void StateSwitchButtonSystem::configure(entityx::EntityManager &entities,
                              entityx::EventManager &events) {
     _events = &events;
     _entities = &entities;
-    _events->subscribe<StateChangeEvent>(*this);
 }
 
 inline void select(StateSwitchButtonC *pButtonC, entityx::Entity &pEntity) {
@@ -67,9 +66,4 @@ void StateSwitchButtonSystem::update(entityx::EntityManager &entities,
 			onButtonClick(entity, entities, events);
 		}
 	}
-}
-
-void StateSwitchButtonSystem::receive(const StateChangeEvent&) {
-    std::cout << "receive" << std::endl;
-//    _events->emit()
 }

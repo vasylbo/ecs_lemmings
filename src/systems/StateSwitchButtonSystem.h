@@ -8,8 +8,6 @@
 
 #include <entityx/System.h>
 #include "../components/StateSwitchButtonC.h"
-#include "../events/StateChangeEvent.h"
-#include "../events/LemmingClickEvent.h"
 
 class StateSwitchButtonSystem :
         public entityx::System<StateSwitchButtonSystem>,
@@ -18,8 +16,6 @@ public:
     StateSwitchButtonSystem(){};
     virtual void configure(entityx::EntityManager &entities,
                            entityx::EventManager &events) override;
-
-    void receive(const StateChangeEvent&);
 
     virtual void update(entityx::EntityManager &entities,
                         entityx::EventManager &events,

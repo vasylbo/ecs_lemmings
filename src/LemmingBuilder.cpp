@@ -12,11 +12,9 @@
 #include "components/MoveC.h"
 #include "components/InteractiveC.h"
 #include "components/DiggerC.h"
-#include "events/StateChangeEvent.h"
 #include "Constants.h"
 #include "components/LayerC.h"
 #include "components/BuilderC.h"
-#include "events/LemmingClickEvent.h"
 
 LemmingBuilder::LemmingBuilder(ex::EntityManager *pEntities,
                                ex::EventManager *pEvents):
@@ -58,14 +56,6 @@ ex::Entity LemmingBuilder::makeBuilder(ex::Entity &lemming) {
     lemming.assign<BuilderC>();
 
     return lemming;
-}
-
-
-//todo: find better place for this one
-void onLemmingClick(entityx::Entity entity,
-                    entityx::EntityManager &entities,
-                    entityx::EventManager &events) {
-    events.emit<LemmingClickEvent>(entity);
 }
 
 ex::Entity LemmingBuilder::makeWalker(ex::Entity &lemming) {

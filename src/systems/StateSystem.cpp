@@ -17,7 +17,6 @@ void StateSystem::configure(entityx::EntityManager &entities,
                             entityx::EventManager &events) {
     events.subscribe<entityx::ComponentAddedEvent<GroundedC>>(*this);
     events.subscribe<entityx::ComponentRemovedEvent<GroundedC>>(*this);
-    events.subscribe<StateChangeEvent>(*this);
 }
 
 void StateSystem::receive(const entityx::ComponentAddedEvent<GroundedC>
@@ -34,22 +33,22 @@ void StateSystem::receive(const entityx::ComponentRemovedEvent<GroundedC>
     _builder->makeFalling(lemming);
 }
 
-void StateSystem::receive(const StateChangeEvent &event) {
-    ex::Entity lemming = event.entity;
-    _builder->cleanLemming(lemming);
-    switch (event.newType) {
-        case LemmingType::DIGGER:
-            _builder->makeDigger(lemming);
-            break;
-
-        case LemmingType::BUILDER:
-            _builder->makeBuilder(lemming);
-            break;
-
-        default:
-            break;
-    }
-}
+// void StateSystem::receive(const StateChangeEvent &event) {
+//     ex::Entity lemming = event.entity;
+//     _builder->cleanLemming(lemming);
+//     switch (event.newType) {
+//         case LemmingType::DIGGER:
+//             _builder->makeDigger(lemming);
+//             break;
+// 
+//         case LemmingType::BUILDER:
+//             _builder->makeBuilder(lemming);
+//             break;
+// 
+//         default:
+//             break;
+//     }
+// }
 
 StateSystem::StateSystem(LemmingBuilder *pBuilder):
         _builder(pBuilder) { }
