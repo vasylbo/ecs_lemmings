@@ -16,6 +16,7 @@
 #include "Constants.h"
 #include "components/LayerC.h"
 #include "components/BuilderC.h"
+#include "events/LemmingClickEvent.h"
 
 LemmingBuilder::LemmingBuilder(ex::EntityManager *pEntities,
                                ex::EventManager *pEvents):
@@ -64,7 +65,7 @@ ex::Entity LemmingBuilder::makeBuilder(ex::Entity &lemming) {
 void onLemmingClick(entityx::Entity entity,
                     entityx::EntityManager &entities,
                     entityx::EventManager &events) {
-    events.emit<StateChangeEvent>(LemmingType::BUILDER, entity);
+    events.emit<LemmingClickEvent>(entity);
 }
 
 ex::Entity LemmingBuilder::makeWalker(ex::Entity &lemming) {
@@ -72,8 +73,7 @@ ex::Entity LemmingBuilder::makeWalker(ex::Entity &lemming) {
 
     lemming.assign<SensorC>(constants::SIGHT, constants::MAP_STEP_HEIGHT);
     lemming.assign<MoveC>(constants::WALK_SPEED);
-    // todo: clean up properly
-    lemming.assign<InteractiveC>(&onLemmingClick);
+    lemming.assign<InteractiveC>();
 
     return lemming;
 }

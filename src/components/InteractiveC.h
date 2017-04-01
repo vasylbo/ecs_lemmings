@@ -9,8 +9,8 @@
 #include "../systems/InteractiveSystem.h"
 
 struct InteractiveC : entityx::Component<InteractiveC> {
-    InteractiveC(InputCallbackFN pOnClick): onClick(pOnClick) {}
+	bool hasBeenClicked;
 
-    InputCallbackFN onClick;
+    InteractiveC(): hasBeenClicked(false) {}
 };
 #endif //LEMMINGS_INTERACTIVEC_H

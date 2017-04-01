@@ -23,7 +23,7 @@ struct GameC : public entityx::Component<GameC> {
     int lemmingsCreated;
 
     // can have raw entity here, because its only an id holder
-    entityx::Entity selectedButton;
+    entityx::Entity selectedButtonEntity;
 };
 
 #endif //LEMMINGS_GAMEC_H

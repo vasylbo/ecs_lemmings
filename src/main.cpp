@@ -15,7 +15,7 @@ void showRendererInfo(SDL_Renderer *pRenderer) {
 void loop(Game &pGame) {
     int start = SDL_GetTicks();
     int end;
-    double dt;
+    double dt = 0.016f;
     while (pGame.isActive()) {
         pGame.update(dt);
         SDL_Delay(15);
@@ -27,16 +27,13 @@ void loop(Game &pGame) {
 }
 
 int main(int, char **) {
-    AllocConsole();
-    freopen("CON", "w", stdout);
-
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         printf("SDL_Init Error: %s \n", SDL_GetError());
         return 1;
     }
 
     SDL_Window *window = SDL_CreateWindow(
-            "Lemmins",
+            "Lemmings",
             SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
             constants::APP_WIDTH, constants::APP_HEIGHT,
             SDL_WINDOW_SHOWN);

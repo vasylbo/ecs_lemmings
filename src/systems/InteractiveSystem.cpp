@@ -12,7 +12,10 @@
 
 void InteractiveSystem::update(entityx::EntityManager &entities,
                                entityx::EventManager &events,
-                               entityx::TimeDelta dt) {
+                               entityx::TimeDelta dt) 
+{
+	cleanClicks(entities);
+
     SDL_Event event;
     bool mouseUp = false;
     auto it = entities.entities_with_components<MouseC>().begin();
@@ -54,10 +57,18 @@ void InteractiveSystem::update(entityx::EntityManager &entities,
 
             if (SDL_PointInRect(&mousePoint, &sprite)) {
                 // todo: do depth search to select only upper one
-                (*interactiveC->onClick)(entity, entities, events);
+				interactiveC->hasBeenClicked = true;
 
                 return;
             }
         }
     }
+}
+
+void InteractiveSystem::cleanClicks(entityx::EntityManager &entities)
+{
+	for (entityx::Entity entity : entities.entities_with_components<InteractiveC>())
+	{
+		entity.component<InteractiveC>()->hasBeenClicked = false;
+	}
 }

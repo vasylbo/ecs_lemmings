@@ -82,3 +82,7 @@ thoughtsOnEntityx.md
 assets
 cmake
 bin
+.vs
+Debug
+CMakeFiles
+CMakeCache.txt

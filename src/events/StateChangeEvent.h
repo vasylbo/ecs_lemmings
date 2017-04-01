@@ -11,11 +11,13 @@
 
 
 struct StateChangeEvent : public entityx::Event<StateChangeEvent> {
-    StateChangeEvent(LemmingType pNewType, entityx::Entity& pEntity) :
-            newType(pNewType), entity(pEntity) {}
+    StateChangeEvent(LemmingType pNewType, entityx::Entity &pEntity) :
+            newType(pNewType), entity(pEntity) {
+    }
 
     LemmingType newType;
-    entityx::Entity& entity;
+    entityx::Entity &entity;
 };
+
 
 #endif //LEMMINGS_STATECHANGEEVENT_H

@@ -7,24 +7,25 @@
 
 
 #include <entityx/System.h>
-#include "../components/ButtonC.h"
+#include "../components/StateSwitchButtonC.h"
+#include "../events/StateChangeEvent.h"
+#include "../events/LemmingClickEvent.h"
 
-class ButtonSystem :
-        public entityx::System<ButtonSystem>,
-        public entityx::Receiver<ButtonSystem> {
+class StateSwitchButtonSystem :
+        public entityx::System<StateSwitchButtonSystem>,
+        public entityx::Receiver<StateSwitchButtonSystem> {
 public:
-    ButtonSystem(){};
+    StateSwitchButtonSystem(){};
     virtual void configure(entityx::EntityManager &entities,
                            entityx::EventManager &events) override;
 
-    void receive(const entityx::ComponentAddedEvent<ButtonC>&);
-    void receive(const entityx::ComponentRemovedEvent<ButtonC>&);
+    void receive(const StateChangeEvent&);
 
     virtual void update(entityx::EntityManager &entities,
                         entityx::EventManager &events,
                         entityx::TimeDelta dt) override;
 
-    virtual ~ButtonSystem();
+    virtual ~StateSwitchButtonSystem();
 
 private:
     entityx::EventManager *_events;

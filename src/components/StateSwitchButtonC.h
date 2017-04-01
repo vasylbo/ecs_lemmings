@@ -6,22 +6,19 @@
 #define LEMMINGS_BUTTONC_H
 
 #include <entityx/Entity.h>
-
-enum ButtonType {
-    ASSIGN_JOB
-};
+#include "../LemmingType.h"
 
 enum ButtonState {
     SELECTED, IDLE
 };
 
-struct ButtonC : public entityx::Component<ButtonC> {
-    ButtonC(ButtonType pType):
-            type(pType),
+struct StateSwitchButtonC : public entityx::Component<StateSwitchButtonC> {
+    StateSwitchButtonC(LemmingType pType):
+            stateToSwitch(pType),
             state(ButtonState::IDLE){};
 
     // static data
-    ButtonType type;
+    LemmingType stateToSwitch;
 
     // dynamic data
     ButtonState state;

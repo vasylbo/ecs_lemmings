@@ -2,7 +2,7 @@
 // Created by Vasyl
 //
 
-#include "SDL2/SDL_image.h"
+#include "SDL_image.h"
 #include "RenderSystem.h"
 #include "../components/RenderC.h"
 #include "../components/PositionC.h"
