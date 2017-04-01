@@ -11,6 +11,7 @@
 void StateSystem::update(entityx::EntityManager &entities,
                          entityx::EventManager &events,
                          entityx::TimeDelta dt) {
+
 }
 
 void StateSystem::configure(entityx::EntityManager &entities,

@@ -33,6 +33,8 @@ void RenderSystem::update(ex::EntityManager &entities,
     PositionC *positionC;
     SDL_SetRenderDrawColor(_renderer, 0x0, 0x0, 0x0, 0xFF);
     SDL_RenderClear(_renderer);
+
+	// render ingame elements
     for (entityx::Entity cam : entities.entities_with_components<CameraC>()) {
         cameraPos = cam.component<PositionC>().get();
         for (entityx::Entity renderE : entities
@@ -62,6 +64,8 @@ void RenderSystem::update(ex::EntityManager &entities,
             }
         };
     }
+
+	// render gui layer
     for (entityx::Entity element : entities.entities_with_components
                    <RenderC, PositionC, LayerC<constants::GUI_LAYER>>()) {
         renderC = element.component<RenderC>().get();

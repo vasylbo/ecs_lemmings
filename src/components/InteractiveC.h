@@ -9,8 +9,13 @@
 #include "../systems/InteractiveSystem.h"
 
 struct InteractiveC : entityx::Component<InteractiveC> {
-	bool hasBeenClicked;
+	const bool needsMouseOverCheck;
 
-    InteractiveC(): hasBeenClicked(false) {}
+	bool hasBeenClicked;
+	bool hasMouseOver;
+
+    InteractiveC(bool pNeedsOverCheck = false): 
+		needsMouseOverCheck(pNeedsOverCheck), 
+		hasBeenClicked(false) {}
 };
 #endif //LEMMINGS_INTERACTIVEC_H

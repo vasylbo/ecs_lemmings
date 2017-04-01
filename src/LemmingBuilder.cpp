@@ -63,7 +63,7 @@ ex::Entity LemmingBuilder::makeWalker(ex::Entity &lemming) {
 
     lemming.assign<SensorC>(constants::SIGHT, constants::MAP_STEP_HEIGHT);
     lemming.assign<MoveC>(constants::WALK_SPEED);
-    lemming.assign<InteractiveC>();
+    lemming.assign<InteractiveC>(true);
 
     return lemming;
 }

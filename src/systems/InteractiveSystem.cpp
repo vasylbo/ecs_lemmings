@@ -35,33 +35,34 @@ void InteractiveSystem::update(entityx::EntityManager &entities,
         }
     }
 
-    if (mouseUp) {
-        PositionC *positionC;
-        RenderC *renderC;
-        InteractiveC *interactiveC;
-        SDL_Rect sprite;
-        SDL_Point mousePoint = {(int) mousePos->x, (int) mousePos->y};
-        it = entities.entities_with_components<CameraC>().begin();
-        PositionC *cameraPos = (*it).component<PositionC>().get();
+	PositionC *positionC;
+	RenderC *renderC;
+	InteractiveC *interactiveC;
+	SDL_Rect sprite;
+	SDL_Point mousePoint = {(int) mousePos->x, (int) mousePos->y};
+	it = entities.entities_with_components<CameraC>().begin();
+	PositionC *cameraPos = (*it).component<PositionC>().get();
 
-        for (entityx::Entity entity : entities
-                .entities_with_components<PositionC, RenderC, InteractiveC>()) {
-            positionC = entity.component<PositionC>().get();
-            renderC = entity.component<RenderC>().get();
-            interactiveC = entity.component<InteractiveC>().get();
+	for (entityx::Entity entity : entities
+			.entities_with_components<PositionC, RenderC, InteractiveC>()) {
+		positionC = entity.component<PositionC>().get();
+		renderC = entity.component<RenderC>().get();
+		interactiveC = entity.component<InteractiveC>().get();
 
-            sprite.x = (int) (positionC->x - renderC->anchor.x - cameraPos->x);
-            sprite.y = (int) (positionC->y - renderC->anchor.y - cameraPos->y);
-            sprite.h = renderC->h;
-            sprite.w = renderC->w;
+		sprite.x = (int) (positionC->x - renderC->anchor.x - cameraPos->x);
+		sprite.y = (int) (positionC->y - renderC->anchor.y - cameraPos->y);
+		sprite.h = renderC->h;
+		sprite.w = renderC->w;
 
-            if (SDL_PointInRect(&mousePoint, &sprite)) {
-                // todo: do depth search to select only upper one
+		if (SDL_PointInRect(&mousePoint, &sprite)) {
+			// todo: do depth search to select only upper one
+
+			if (interactiveC->needsMouseOverCheck)
+				interactiveC->hasMouseOver = true;
+
+			if (mouseUp) 
 				interactiveC->hasBeenClicked = true;
-
-                return;
-            }
-        }
+		}
     }
 }
 
@@ -69,6 +70,8 @@ void InteractiveSystem::cleanClicks(entityx::EntityManager &entities)
 {
 	for (entityx::Entity entity : entities.entities_with_components<InteractiveC>())
 	{
-		entity.component<InteractiveC>()->hasBeenClicked = false;
+		InteractiveC* comp = entity.component<InteractiveC>().get();
+		comp->hasBeenClicked = false;
+		comp->hasMouseOver= false;
 	}
 }
